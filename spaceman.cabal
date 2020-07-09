@@ -1,0 +1,20 @@
+cabal-version:       >=1.10
+name:                spaceman
+version:             0.1.0
+synopsis:            Run Whitespace Programs
+description:         Whitespace Implementation
+license:             BSD2
+license-file:        LICENCE
+author:              Frank Terbeck
+maintainer:          ft@bewatermyfriend.org
+copyright:           © 2020 SpaceMan Workers
+category:            Compiler
+stability:           experimental
+build-type:          Simple
+extra-source-files:  CHANGES
+
+executable spaceman
+  main-is:             SpaceMan.hs
+  build-depends:       base >=4.12 && <4.13
+  hs-source-dirs:      src
+  default-language:    Haskell2010
