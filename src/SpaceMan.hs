@@ -76,24 +76,18 @@ whitespaceOperator op = do
 
 additionParser :: Parser ArithmeticOperation
 additionParser = do
-  whitespaceOperator horiztab
-  whitespaceOperator asciispace
   whitespaceOperator asciispace
   whitespaceOperator asciispace
   return Add
 
 subtractParser :: Parser ArithmeticOperation
 subtractParser = do
-  whitespaceOperator horiztab
-  whitespaceOperator asciispace
   whitespaceOperator asciispace
   whitespaceOperator horiztab
   return Subtract
 
 multiplyParser :: Parser ArithmeticOperation
 multiplyParser = do
-  whitespaceOperator horiztab
-  whitespaceOperator asciispace
   whitespaceOperator asciispace
   whitespaceOperator linefeed
   return Multiply
@@ -102,21 +96,18 @@ divideParser :: Parser ArithmeticOperation
 divideParser = do
   whitespaceOperator horiztab
   whitespaceOperator asciispace
-  whitespaceOperator horiztab
-  whitespaceOperator asciispace
   return Divide
 
 moduloParser :: Parser ArithmeticOperation
 moduloParser = do
-  whitespaceOperator horiztab
-  whitespaceOperator asciispace
   whitespaceOperator horiztab
   whitespaceOperator horiztab
   return Modulo
 
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
-  discardOthers
+  whitespaceOperator horiztab
+  whitespaceOperator asciispace
   try additionParser
     <|> try subtractParser
     <|> try multiplyParser
