@@ -58,11 +58,11 @@ horiztab   = Data.Char.chr  9
 linefeed   = Data.Char.chr 10
 asciispace = Data.Char.chr 32
 
-opchars :: [Char]
-opchars = [ horiztab, linefeed, asciispace ]
+whitespaceCharacters :: [Char]
+whitespaceCharacters = [ horiztab, linefeed, asciispace ]
 
 otherCharacters :: (MonadParsec e s m, Token s ~ Char) => m (Tokens s)
-otherCharacters = takeWhileP Nothing (`notElem` opchars)
+otherCharacters = takeWhileP Nothing (`notElem` whitespaceCharacters)
 
 discardOthers :: Parser ()
 discardOthers = do
