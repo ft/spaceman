@@ -74,45 +74,25 @@ whitespaceOperator op = do
   void $ char op
   discardOthers
 
-additionParser :: Parser ArithmeticOperation
-additionParser = do
-  whitespaceOperator asciispace
-  whitespaceOperator asciispace
-  return Add
+prefix :: [Char] -> Parser ()
+prefix [] = return ()
+prefix (x:xs) = do
+  whitespaceOperator x
+  prefix xs
 
-subtractParser :: Parser ArithmeticOperation
-subtractParser = do
-  whitespaceOperator asciispace
-  whitespaceOperator horiztab
-  return Subtract
-
-multiplyParser :: Parser ArithmeticOperation
-multiplyParser = do
-  whitespaceOperator asciispace
-  whitespaceOperator linefeed
-  return Multiply
-
-divideParser :: Parser ArithmeticOperation
-divideParser = do
-  whitespaceOperator horiztab
-  whitespaceOperator asciispace
-  return Divide
-
-moduloParser :: Parser ArithmeticOperation
-moduloParser = do
-  whitespaceOperator horiztab
-  whitespaceOperator horiztab
-  return Modulo
+operation :: [Char] -> a -> Parser a
+operation xs op = do
+  void $ prefix xs
+  return op
 
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
-  whitespaceOperator horiztab
-  whitespaceOperator asciispace
-  try additionParser
-    <|> try subtractParser
-    <|> try multiplyParser
-    <|> try divideParser
-    <|> try moduloParser
+  (      try $ prefix    [ horiztab,   asciispace ])
+  (      try $ operation [ asciispace, asciispace ] Add)
+    <|> (try $ operation [ asciispace, horiztab   ] Subtract)
+    <|> (try $ operation [ asciispace, linefeed   ] Multiply)
+    <|> (try $ operation [ horiztab,   asciispace ] Divide)
+    <|> (try $ operation [ horiztab,   horiztab   ] Modulo)
 
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser = Arithmetic <$> arithmeticParser
