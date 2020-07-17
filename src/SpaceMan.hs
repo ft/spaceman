@@ -94,8 +94,18 @@ arithmeticParser = do
     <|> (try $ operation [ horiztab,   asciispace ] Divide)
     <|> (try $ operation [ horiztab,   horiztab   ] Modulo)
 
+ioParser :: Parser InputOutputOperation
+ioParser = do
+  (      try $ prefix    [ horiztab,   linefeed   ])
+  (      try $ operation [ asciispace, asciispace ] PrintCharacter)
+    <|> (try $ operation [ asciispace, horiztab   ] PrintNumber)
+    <|> (try $ operation [ horiztab,   asciispace ] ReadCharacter)
+    <|> (try $ operation [ horiztab,   horiztab   ] ReadNumber)
+
 whitespaceParser :: Parser WhitespaceExpression
-whitespaceParser = Arithmetic <$> arithmeticParser
+whitespaceParser =
+  (Arithmetic <$> arithmeticParser) <|> (InputOutput <$> ioParser)
+
 
 whitespaceRead :: Parser [WhitespaceExpression]
 whitespaceRead = do
