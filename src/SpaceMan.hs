@@ -102,9 +102,17 @@ ioParser = do
     <|> (try $ operation [ horiztab,   asciispace ] ReadCharacter)
     <|> (try $ operation [ horiztab,   horiztab   ] ReadNumber)
 
+heapParser :: Parser HeapOperation
+heapParser = do
+  (      try $ prefix    [ horiztab,   horiztab ])
+  (      try $ operation [ asciispace ] Store)
+    <|> (try $ operation [ horiztab   ] Fetch)
+
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser =
-  (Arithmetic <$> arithmeticParser) <|> (InputOutput <$> ioParser)
+  (Arithmetic <$> arithmeticParser)
+  <|> (InputOutput <$> ioParser)
+  <|> (HeapAccess <$> heapParser)
 
 
 whitespaceRead :: Parser [WhitespaceExpression]
