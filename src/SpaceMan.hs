@@ -9,47 +9,7 @@ import Text.Megaparsec
 import Text.Megaparsec.Char
 
 import qualified SpaceMan.Alphabet as WS
-
-type Label = String
-
-data StackOperation = Push Integer
-                    | Duplicate
-                    | Swap
-                    | Drop
-  deriving (Show, Eq)
-
-data ArithmeticOperation = Add
-                         | Subtract
-                         | Multiply
-                         | Divide
-                         | Modulo
-  deriving (Show, Eq)
-
-data HeapOperation = Store | Fetch deriving (Show, Eq)
-
-data FlowControlOperation = Mark Label
-                          | Call Label
-                          | Jump Label
-                          | JumpIfZero Label
-                          | JumpIfNegative Label
-                          | Return
-                          | ExitFromProgram
-  deriving (Show, Eq)
-
-data InputOutputOperation = PrintCharacter
-                          | PrintNumber
-                          | ReadCharacter
-                          | ReadNumber
-  deriving (Show, Eq)
-
-data WhitespaceExpression = StackManipulation StackOperation
-                          | Arithmetic ArithmeticOperation
-                          | HeapAccess HeapOperation
-                          | FlowControl FlowControlOperation
-                          | InputOutput InputOutputOperation
-  deriving (Show, Eq)
-
-type WhitespaceProgram = [WhitespaceExpression]
+import qualified SpaceMan.AbstractSyntaxTree as AST
 
 type Parser = Parsec Void String
 type ParserError = (ParseErrorBundle String Void)
@@ -79,36 +39,36 @@ operation xs op = do
   void $ imp xs
   return op
 
-arithmeticParser :: Parser ArithmeticOperation
+arithmeticParser :: Parser AST.ArithmeticOperation
 arithmeticParser = do
   (      try $ imp       [ WS.tabular, WS.space ])
-  (      try $ operation [ WS.space,   WS.space    ] Add)
-    <|> (try $ operation [ WS.space,   WS.tabular  ] Subtract)
-    <|> (try $ operation [ WS.space,   WS.linefeed ] Multiply)
-    <|> (try $ operation [ WS.tabular, WS.space    ] Divide)
-    <|> (try $ operation [ WS.tabular, WS.tabular  ] Modulo)
+  (      try $ operation [ WS.space,   WS.space    ] AST.Add)
+    <|> (try $ operation [ WS.space,   WS.tabular  ] AST.Subtract)
+    <|> (try $ operation [ WS.space,   WS.linefeed ] AST.Multiply)
+    <|> (try $ operation [ WS.tabular, WS.space    ] AST.Divide)
+    <|> (try $ operation [ WS.tabular, WS.tabular  ] AST.Modulo)
 
-ioParser :: Parser InputOutputOperation
+ioParser :: Parser AST.InputOutputOperation
 ioParser = do
   (      try $ imp       [ WS.tabular, WS.linefeed ])
-  (      try $ operation [ WS.space,   WS.space    ] PrintCharacter)
-    <|> (try $ operation [ WS.space,   WS.tabular  ] PrintNumber)
-    <|> (try $ operation [ WS.tabular, WS.space    ] ReadCharacter)
-    <|> (try $ operation [ WS.tabular, WS.tabular  ] ReadNumber)
+  (      try $ operation [ WS.space,   WS.space    ] AST.PrintCharacter)
+    <|> (try $ operation [ WS.space,   WS.tabular  ] AST.PrintNumber)
+    <|> (try $ operation [ WS.tabular, WS.space    ] AST.ReadCharacter)
+    <|> (try $ operation [ WS.tabular, WS.tabular  ] AST.ReadNumber)
 
-heapParser :: Parser HeapOperation
+heapParser :: Parser AST.HeapOperation
 heapParser = do
   (      try $ imp       [ WS.tabular, WS.tabular ])
-  (      try $ operation [ WS.space   ] Store)
-    <|> (try $ operation [ WS.tabular ] Fetch)
+  (      try $ operation [ WS.space   ] AST.Store)
+    <|> (try $ operation [ WS.tabular ] AST.Fetch)
 
-whitespaceParser :: Parser WhitespaceExpression
+whitespaceParser :: Parser AST.WhitespaceExpression
 whitespaceParser =
-  (    Arithmetic  <$> arithmeticParser)
-  <|> (InputOutput <$> ioParser)
-  <|> (HeapAccess  <$> heapParser)
+  (    AST.Arithmetic  <$> arithmeticParser)
+  <|> (AST.InputOutput <$> ioParser)
+  <|> (AST.HeapAccess  <$> heapParser)
 
-whitespaceRead :: Parser [WhitespaceExpression]
+whitespaceRead :: Parser [AST.WhitespaceExpression]
 whitespaceRead = do
   discardOthers
   many whitespaceParser
