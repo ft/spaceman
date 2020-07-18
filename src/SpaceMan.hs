@@ -74,20 +74,21 @@ whitespaceOperator op = do
   void $ char op
   discardOthers
 
-prefix :: [Char] -> Parser ()
-prefix [] = return ()
-prefix (x:xs) = do
+-- Instruction Manipulation Parameter
+imp :: [Char] -> Parser ()
+imp [] = return ()
+imp (x:xs) = do
   whitespaceOperator x
-  prefix xs
+  imp xs
 
 operation :: [Char] -> a -> Parser a
 operation xs op = do
-  void $ prefix xs
+  void $ imp xs
   return op
 
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
-  (      try $ prefix    [ horiztab,   asciispace ])
+  (      try $ imp       [ horiztab,   asciispace ])
   (      try $ operation [ asciispace, asciispace ] Add)
     <|> (try $ operation [ asciispace, horiztab   ] Subtract)
     <|> (try $ operation [ asciispace, linefeed   ] Multiply)
@@ -96,7 +97,7 @@ arithmeticParser = do
 
 ioParser :: Parser InputOutputOperation
 ioParser = do
-  (      try $ prefix    [ horiztab,   linefeed   ])
+  (      try $ imp       [ horiztab,   linefeed   ])
   (      try $ operation [ asciispace, asciispace ] PrintCharacter)
     <|> (try $ operation [ asciispace, horiztab   ] PrintNumber)
     <|> (try $ operation [ horiztab,   asciispace ] ReadCharacter)
@@ -104,7 +105,7 @@ ioParser = do
 
 heapParser :: Parser HeapOperation
 heapParser = do
-  (      try $ prefix    [ horiztab,   horiztab ])
+  (      try $ imp       [ horiztab,   horiztab ])
   (      try $ operation [ asciispace ] Store)
     <|> (try $ operation [ horiztab   ] Fetch)
 
