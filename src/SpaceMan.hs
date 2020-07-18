@@ -4,10 +4,11 @@
 -- followed by operations.
 
 import Control.Monad
-import Data.Char
 import Data.Void
 import Text.Megaparsec
 import Text.Megaparsec.Char
+
+import qualified SpaceMan.Alphabet as WS
 
 type Label = String
 
@@ -53,16 +54,8 @@ type WhitespaceProgram = [WhitespaceExpression]
 type Parser = Parsec Void String
 type ParserError = (ParseErrorBundle String Void)
 
-horiztab, linefeed, asciispace :: Char
-horiztab   = Data.Char.chr  9
-linefeed   = Data.Char.chr 10
-asciispace = Data.Char.chr 32
-
-whitespaceCharacters :: [Char]
-whitespaceCharacters = [ horiztab, linefeed, asciispace ]
-
 otherCharacters :: (MonadParsec e s m, Token s ~ Char) => m (Tokens s)
-otherCharacters = takeWhileP Nothing (`notElem` whitespaceCharacters)
+otherCharacters = takeWhileP Nothing $ not . WS.fromWhitespaceAlphabet
 
 discardOthers :: Parser ()
 discardOthers = do
@@ -88,33 +81,32 @@ operation xs op = do
 
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
-  (      try $ imp       [ horiztab,   asciispace ])
-  (      try $ operation [ asciispace, asciispace ] Add)
-    <|> (try $ operation [ asciispace, horiztab   ] Subtract)
-    <|> (try $ operation [ asciispace, linefeed   ] Multiply)
-    <|> (try $ operation [ horiztab,   asciispace ] Divide)
-    <|> (try $ operation [ horiztab,   horiztab   ] Modulo)
+  (      try $ imp       [ WS.tabular, WS.space ])
+  (      try $ operation [ WS.space,   WS.space    ] Add)
+    <|> (try $ operation [ WS.space,   WS.tabular  ] Subtract)
+    <|> (try $ operation [ WS.space,   WS.linefeed ] Multiply)
+    <|> (try $ operation [ WS.tabular, WS.space    ] Divide)
+    <|> (try $ operation [ WS.tabular, WS.tabular  ] Modulo)
 
 ioParser :: Parser InputOutputOperation
 ioParser = do
-  (      try $ imp       [ horiztab,   linefeed   ])
-  (      try $ operation [ asciispace, asciispace ] PrintCharacter)
-    <|> (try $ operation [ asciispace, horiztab   ] PrintNumber)
-    <|> (try $ operation [ horiztab,   asciispace ] ReadCharacter)
-    <|> (try $ operation [ horiztab,   horiztab   ] ReadNumber)
+  (      try $ imp       [ WS.tabular, WS.linefeed ])
+  (      try $ operation [ WS.space,   WS.space    ] PrintCharacter)
+    <|> (try $ operation [ WS.space,   WS.tabular  ] PrintNumber)
+    <|> (try $ operation [ WS.tabular, WS.space    ] ReadCharacter)
+    <|> (try $ operation [ WS.tabular, WS.tabular  ] ReadNumber)
 
 heapParser :: Parser HeapOperation
 heapParser = do
-  (      try $ imp       [ horiztab,   horiztab ])
-  (      try $ operation [ asciispace ] Store)
-    <|> (try $ operation [ horiztab   ] Fetch)
+  (      try $ imp       [ WS.tabular, WS.tabular ])
+  (      try $ operation [ WS.space   ] Store)
+    <|> (try $ operation [ WS.tabular ] Fetch)
 
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser =
-  (Arithmetic <$> arithmeticParser)
+  (    Arithmetic  <$> arithmeticParser)
   <|> (InputOutput <$> ioParser)
-  <|> (HeapAccess <$> heapParser)
-
+  <|> (HeapAccess  <$> heapParser)
 
 whitespaceRead :: Parser [WhitespaceExpression]
 whitespaceRead = do
