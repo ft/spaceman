@@ -15,7 +15,9 @@ extra-source-files:  CHANGES
 
 executable spaceman
   main-is:             SpaceMan.hs
-  other-modules:       SpaceMan.AbstractSyntaxTree, SpaceMan.Alphabet
+  other-modules:       SpaceMan.AbstractSyntaxTree,
+                       SpaceMan.Alphabet,
+                       SpaceMan.Parser
   build-depends:       base >=4.12,
                        megaparsec >= 8.0.0
   hs-source-dirs:      src
