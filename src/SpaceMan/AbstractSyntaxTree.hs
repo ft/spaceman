@@ -21,7 +21,9 @@ data ArithmeticOperation = Add
                          | Modulo
   deriving (Show, Eq)
 
-data HeapOperation = Store | Fetch deriving (Show, Eq)
+data HeapOperation = Store
+                   | Fetch
+  deriving (Show, Eq)
 
 data FlowControlOperation = Mark Label
                           | Call Label
