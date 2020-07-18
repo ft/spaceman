@@ -1,4 +1,10 @@
-module SpaceMan.AbstractSyntaxTree where
+module SpaceMan.AbstractSyntaxTree (WhitespaceProgram,
+                                    WhitespaceExpression(..),
+                                    InputOutputOperation(..),
+                                    FlowControlOperation(..),
+                                    HeapOperation(..),
+                                    ArithmeticOperation(..),
+                                    Label) where
 
 type Label = String
 
