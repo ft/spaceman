@@ -2,8 +2,9 @@
 
 module SpaceMan.Parser (Parser, ParserError,
                         discardOthers,
-                        whitespaceOperator,
-                        whitespaceInteger) where
+                        whitespaceInteger,
+                        whitespaceLabel,
+                        whitespaceOperator) where
 
 import Control.Monad
 import Data.Void
@@ -55,3 +56,11 @@ whitespaceInteger :: Parser Integer
 whitespaceInteger = listToInteger
                     <$> map char2bit
                     <$> takeWhile1P Nothing WS.fromIntegerAlphabet
+
+char2label :: Char -> Char
+char2label c = if (c == WS.space) then 's'
+               else 'T'
+
+whitespaceLabel :: Parser Label
+whitespaceLabel = map char2label
+                  <$> takeWhile1P Nothing WS.fromLabelAlphabet
