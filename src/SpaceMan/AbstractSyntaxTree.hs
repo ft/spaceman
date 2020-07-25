@@ -3,8 +3,17 @@ module SpaceMan.AbstractSyntaxTree (WhitespaceProgram,
                                     InputOutputOperation(..),
                                     FlowControlOperation(..),
                                     HeapOperation(..),
+                                    StackOperation(..),
                                     ArithmeticOperation(..),
+                                    IntegerBit(..),
+                                    IntegerString,
                                     Label) where
+
+data IntegerBit = Zero
+                | One
+  deriving (Show, Eq)
+
+type IntegerString = [IntegerBit]
 
 type Label = String
 
