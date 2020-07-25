@@ -42,11 +42,27 @@ heapParser = do
   (      try $ operation [ WS.space   ] Store)
     <|> (try $ operation [ WS.tabular ] Fetch)
 
+pushIntegerParser :: Parser StackOperation
+pushIntegerParser = do
+  imp [ WS.space ] <?> "<space>"
+  ns <- whitespaceInteger
+  imp [ WS.linefeed ] <?> "<linefeed>"
+  return $ Push ns
+
+stackParser :: Parser StackOperation
+stackParser = do
+  (      try $ imp       [ WS.space ])
+  (      try $ pushIntegerParser)
+    <|> (try $ operation [ WS.linefeed, WS.space    ] Duplicate)
+    <|> (try $ operation [ WS.linefeed, WS.tabular  ] Swap)
+    <|> (try $ operation [ WS.linefeed, WS.linefeed ] Drop)
+
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser =
   (    Arithmetic  <$> arithmeticParser)
   <|> (InputOutput <$> ioParser)
   <|> (HeapAccess  <$> heapParser)
+  <|> (StackManipulation  <$> stackParser)
 
 whitespaceRead :: Parser [WhitespaceExpression]
 whitespaceRead = do
