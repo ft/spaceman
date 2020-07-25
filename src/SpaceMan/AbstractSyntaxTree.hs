@@ -34,7 +34,7 @@ data HeapOperation = Store
                    | Fetch
   deriving (Show, Eq)
 
-data FlowControlOperation = Mark Label
+data FlowControlOperation = Tag Label
                           | Call Label
                           | Jump Label
                           | JumpIfZero Label
