@@ -17,3 +17,6 @@ integerAlphabet = [ space, tabular ]
 
 fromIntegerAlphabet :: Char -> Bool
 fromIntegerAlphabet c = elem c integerAlphabet
+
+fromLabelAlphabet :: Char -> Bool
+fromLabelAlphabet = fromIntegerAlphabet
