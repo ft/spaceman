@@ -59,10 +59,10 @@ stackParser = do
 
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser =
-  (    Arithmetic  <$> arithmeticParser)
-  <|> (InputOutput <$> ioParser)
-  <|> (HeapAccess  <$> heapParser)
-  <|> (StackManipulation  <$> stackParser)
+  (    StackManipulation  <$> stackParser)
+  <|> (Arithmetic         <$> arithmeticParser)
+  <|> (HeapAccess         <$> heapParser)
+  <|> (InputOutput        <$> ioParser)
 
 whitespaceRead :: Parser [WhitespaceExpression]
 whitespaceRead = do
