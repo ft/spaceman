@@ -57,11 +57,30 @@ stackParser = do
     <|> (try $ operation [ WS.linefeed, WS.tabular  ] Swap)
     <|> (try $ operation [ WS.linefeed, WS.linefeed ] Drop)
 
+tag :: [Char] -> Parser Label
+tag xs = do
+  void $ imp xs
+  l <- whitespaceLabel
+  imp [ WS.linefeed ] <?> "<linefeed>"
+  return l
+
+flowControlParser :: Parser FlowControlOperation
+flowControlParser = do
+  (      try $ imp [ WS.linefeed ])
+  (      try $ Tag            <$> tag [ WS.space,    WS.space    ])
+    <|> (try $ Call           <$> tag [ WS.space,    WS.tabular  ])
+    <|> (try $ Jump           <$> tag [ WS.space,    WS.linefeed ])
+    <|> (try $ JumpIfZero     <$> tag [ WS.tabular,  WS.space    ])
+    <|> (try $ JumpIfNegative <$> tag [ WS.tabular,  WS.tabular  ])
+    <|> (try $ operation              [ WS.tabular,  WS.linefeed ] Return)
+    <|> (try $ operation              [ WS.linefeed, WS.linefeed ] ExitFromProgram)
+
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser =
   (    StackManipulation  <$> stackParser)
   <|> (Arithmetic         <$> arithmeticParser)
   <|> (HeapAccess         <$> heapParser)
+  <|> (FlowControl        <$> flowControlParser)
   <|> (InputOutput        <$> ioParser)
 
 whitespaceRead :: Parser [WhitespaceExpression]
