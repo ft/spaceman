@@ -11,3 +11,9 @@ whitespaceAlphabet = [ linefeed, space, tabular ]
 
 fromWhitespaceAlphabet :: Char -> Bool
 fromWhitespaceAlphabet c = elem c whitespaceAlphabet
+
+integerAlphabet :: [Char]
+integerAlphabet = [ space, tabular ]
+
+fromIntegerAlphabet :: Char -> Bool
+fromIntegerAlphabet c = elem c integerAlphabet
