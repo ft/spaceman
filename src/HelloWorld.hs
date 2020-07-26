@@ -55,10 +55,12 @@ main = do
     FlowControl (Tag "sss"),        -- PrintString Function
     StackManipulation Duplicate,
     HeapAccess Fetch,
+    StackManipulation Duplicate,
     FlowControl (JumpIfZero "TsT"), -- If End of String
     InputOutput PrintCharacter,
     StackManipulation (Push 1),
     Arithmetic Add,                 -- Loop Variable + 1
+    StackManipulation Duplicate,
     FlowControl (Jump "sss"),       -- TailRecurse
 
     FlowControl (Tag "TsT"),        -- Found End of String in Heap
