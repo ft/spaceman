@@ -1,73 +1,23 @@
-module SpaceMan.Machine (extractJumpTable,
-                         loadTheMachine,
-                         getLabelAddress,
-                         heapFetch,
-                         heapStore,
-                         WhitespaceMachine(..))
-where
-
-import Control.Monad
+module SpaceMan.Machine (machineStep, runMachine) where
 
 import SpaceMan.AbstractSyntaxTree
+import SpaceMan.Machine.Types
 
-type JumpTable = [(String, Integer)]
+import qualified SpaceMan.Machine.Arithmetic as Arith
+import qualified SpaceMan.Machine.FlowControl as FlowControl
+import qualified SpaceMan.Machine.InputOutput as InOut
+import qualified SpaceMan.Machine.MemoryHeap as MemHeap
+import qualified SpaceMan.Machine.MemoryStack as MemStack
 
-getLabelAddress :: JumpTable -> String -> Integer
-getLabelAddress [] _ = 0
-getLabelAddress ((tag,address):xs) t =
-  if (tag == t) then address
-                else getLabelAddress xs t
+machineStep :: WhitespaceMachine -> WhitespaceExpression -> IO WhitespaceMachine
+machineStep m (StackManipulation s) = MemStack.eval m s
+machineStep m (Arithmetic a)        = Arith.eval m a
+machineStep m (HeapAccess h)        = MemHeap.eval m h
+machineStep m (FlowControl f)       = FlowControl.eval m f
+machineStep m (InputOutput io)      = InOut.eval m io
 
-type Stack = [Integer]
-type Address = Integer
-type Value = Integer
-
-type HeapDatum = (Address, Value)
-type Heap = [HeapDatum]
-
-heapStore :: Heap -> Address -> Value -> Heap
-heapStore [] a v = [ (a,v) ]
-heapStore ((addr,value):xs) a v =
-  if (addr == a) then (a,v):xs
-                 else (addr,value) : heapStore xs a v
-
-heapFetch :: Heap -> Address -> Value
-heapFetch [] _ = 0
-heapFetch ((addr,value):xs) a =
-  if (addr == a) then value
-                 else heapFetch xs a
-
-type StartInfo = (Integer, JumpTable, WhitespaceProgram)
-type MachineStart = Either String StartInfo
-
-extractPure :: StartInfo -> WhitespaceExpression -> MachineStart
-extractPure (idx, jt, ps) (FlowControl (Tag tag)) =
-  if tag `elem` (map fst jt)
-  then Left $ "Label " ++ tag ++ " already defined."
-  else Right (idx, jt ++ [ (tag, idx) ], ps)
-extractPure (idx, jt, ps) p = Right (idx + 1, jt, ps ++ [ p ])
-
-extractJumpTable :: WhitespaceProgram -> MachineStart
-extractJumpTable = foldM extractPure (0,[],[])
-
-data WhitespaceMachine = WhitespaceMachine
-  {
-    stack     :: Stack,
-    callStack :: Stack,
-    heap      :: Heap,
-    pc        :: Integer,
-    jump      :: JumpTable,
-    program   :: WhitespaceProgram
-  } deriving (Show, Eq)
-
-loadTheMachine :: MachineStart -> Either String WhitespaceMachine
-loadTheMachine (Left msg) = Left msg
-loadTheMachine (Right (_, jumpTable, reducedProgram)) =
-  Right WhitespaceMachine {
-    stack = [],
-    callStack = [],
-    heap = [],
-    pc = 0,
-    jump = jumpTable,
-    program = reducedProgram
-  }
+runMachine :: WhitespaceMachine -> IO ()
+runMachine m = do
+  nextState <- machineStep m instruction
+  runMachine nextState
+  where instruction = (program m) !! (fromInteger $ pc m)

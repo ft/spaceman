@@ -11,7 +11,7 @@ import qualified SpaceMan.Alphabet as WS
 execute :: Either ParserError WhitespaceProgram -> IO ()
 execute (Left msg) = putStrLn $ show msg
 execute (Right prg) = do run machine
-  where machine = loadWhitespace prg
+  where machine = load prg
 
 runit :: String -> IO ()
 runit f = do

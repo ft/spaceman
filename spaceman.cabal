@@ -20,6 +20,12 @@ executable spaceman
                        SpaceMan.Interpreter,
                        SpaceMan.Language,
                        SpaceMan.Machine,
+                       SpaceMan.Machine.Arithmetic,
+                       SpaceMan.Machine.FlowControl,
+                       SpaceMan.Machine.InputOutput,
+                       SpaceMan.Machine.MemoryHeap,
+                       SpaceMan.Machine.MemoryStack,
+                       SpaceMan.Machine.Types,
                        SpaceMan.Parser
   build-depends:       base >=4.12,
                        megaparsec >= 8.0.0
