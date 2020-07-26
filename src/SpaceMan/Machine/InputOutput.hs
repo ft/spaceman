@@ -11,3 +11,8 @@ eval m PrintCharacter = do
   putChar (chr (fromInteger (head (stack m))))
   return m { stack = tail (stack m),
              pc = (pc m) + 1 }
+
+eval m PrintNumber = do
+  putStr $ show $ head $ stack m
+  return m { stack = tail (stack m),
+             pc = (pc m) + 1 }
