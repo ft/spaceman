@@ -60,7 +60,6 @@ main = do
     InputOutput PrintCharacter,
     StackManipulation (Push 1),
     Arithmetic Add,                 -- Loop Variable + 1
-    StackManipulation Duplicate,
     FlowControl (Jump "sss"),       -- TailRecurse
 
     FlowControl (Tag "TsT"),        -- Found End of String in Heap

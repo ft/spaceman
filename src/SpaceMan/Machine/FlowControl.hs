@@ -19,8 +19,7 @@ eval m (JumpIfZero tag) =
         newPC = if ((head (stack m)) == 0) then address else (pc m) + 1
 
 eval m (Jump tag) =
-  return m { stack = tail $ stack m,
-             pc = address }
+  return m { pc = address }
   where address = getLabelAddress (jump m) tag
 
 eval m Return =
