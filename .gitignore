@@ -1,3 +1,5 @@
 *~
 \#*
 *.lock
+cabal.project.local
+dist-newstyle/
