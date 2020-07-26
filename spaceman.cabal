@@ -19,6 +19,7 @@ executable spaceman
                        SpaceMan.Alphabet,
                        SpaceMan.Interpreter,
                        SpaceMan.Language,
+                       SpaceMan.Machine,
                        SpaceMan.Parser
   build-depends:       base >=4.12,
                        megaparsec >= 8.0.0
