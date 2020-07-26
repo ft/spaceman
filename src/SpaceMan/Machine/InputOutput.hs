@@ -16,3 +16,13 @@ eval m PrintNumber = do
   putStr $ show $ head $ stack m
   return m { stack = tail (stack m),
              pc = (pc m) + 1 }
+
+eval m ReadCharacter = do
+  c <- getChar
+  return m { stack = (toInteger $ ord c):(stack m),
+             pc = (pc m) + 1 }
+
+eval m ReadNumber = do
+  c <- getLine
+  return m { stack = (read $ c :: Integer):(stack m),
+             pc = (pc m) + 1 }
