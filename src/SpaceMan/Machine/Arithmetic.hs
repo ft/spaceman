@@ -6,8 +6,15 @@ import SpaceMan.Machine.Types
 eval :: WhitespaceMachine -> ArithmeticOperation -> IO WhitespaceMachine
 
 eval m Add =
-  return m { stack = (a+b):(drop 2 (stack m)),
+  return m { stack = res:(drop 2 (stack m)),
              pc = (pc m) + 1 }
-  where a = head $ stack m
-        b = head $ tail $ stack m
+  where a = head $ tail $ stack m
+        b = head $ stack m
         res = a + b
+
+eval m Subtract = do
+  return m { stack = res:(drop 2 (stack m)),
+             pc = (pc m) + 1 }
+  where a = head $ tail $ stack m
+        b = head $ stack m
+        res = a - b
