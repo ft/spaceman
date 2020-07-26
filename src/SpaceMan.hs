@@ -6,8 +6,6 @@ import SpaceMan.Interpreter
 import SpaceMan.Language
 import SpaceMan.Parser
 
-import qualified SpaceMan.Alphabet as WS
-
 execute :: Either ParserError WhitespaceProgram -> IO ()
 execute (Left msg) = putStrLn $ show msg
 execute (Right prg) = do run machine
