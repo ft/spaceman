@@ -13,12 +13,14 @@ eval m (Call tag) =
   where address = getLabelAddress (jump m) tag
 
 eval m (JumpIfZero tag) =
-  return m { pc = newPC }
+  return m { stack = tail $ stack m,
+             pc = newPC }
   where address = getLabelAddress (jump m) tag
         newPC = if ((head (stack m)) == 0) then address else (pc m) + 1
 
 eval m (Jump tag) =
-  return m { pc = address }
+  return m { stack = tail $ stack m,
+             pc = address }
   where address = getLabelAddress (jump m) tag
 
 eval m Return =
