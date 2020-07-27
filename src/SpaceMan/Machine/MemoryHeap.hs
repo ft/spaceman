@@ -1,21 +1,11 @@
 module SpaceMan.Machine.MemoryHeap (eval) where
 
 import SpaceMan.AbstractSyntaxTree
+import SpaceMan.Machine.Tools
 import SpaceMan.Machine.Types
 
 eval :: WhitespaceMachine -> HeapOperation -> IO WhitespaceMachine
 
-eval m Store = do
-  return m { heap = heapStore (heap m) address value,
-             stack = drop 2 $ stack m,
-             pc = (pc m) + 1 }
-  where value = head $ stack m
-        address = head $ tail $ stack m
-
-eval m Fetch = do
-  return m { stack = newStack,
-             pc = (pc m) + 1 }
-  where st = stack m
-        address = head st
-        value = heapFetch (heap m) address
-        newStack = value:(tail st)
+eval m Store = return $ pci $ drp 2 $ sto a v m  where [v,a] = peek 2 m
+eval m Fetch = return $ pci $ psh [v] $ drp 1 m  where [a]   = peek 1 m
+                                                       v     = lda a m

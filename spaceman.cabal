@@ -25,6 +25,7 @@ executable spaceman
                        SpaceMan.Machine.InputOutput,
                        SpaceMan.Machine.MemoryHeap,
                        SpaceMan.Machine.MemoryStack,
+                       SpaceMan.Machine.Tools,
                        SpaceMan.Machine.Types,
                        SpaceMan.Parser
   build-depends:       base >=4.12,

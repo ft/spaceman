@@ -1,41 +1,17 @@
 module SpaceMan.Machine.Arithmetic (eval) where
 
 import SpaceMan.AbstractSyntaxTree
+import SpaceMan.Machine.Tools
 import SpaceMan.Machine.Types
+
+arith :: WhitespaceMachine -> (Integer -> Integer -> Integer) -> IO WhitespaceMachine
+arith m op = return $ pci $ psh [l `op` r] $ drp 1 m
+  where [r,l] = peek 2 m
 
 eval :: WhitespaceMachine -> ArithmeticOperation -> IO WhitespaceMachine
 
-eval m Add =
-  return m { stack = res:(drop 2 (stack m)),
-             pc = (pc m) + 1 }
-  where a = head $ tail $ stack m
-        b = head $ stack m
-        res = a + b
-
-eval m Subtract = do
-  return m { stack = res:(drop 2 (stack m)),
-             pc = (pc m) + 1 }
-  where a = head $ tail $ stack m
-        b = head $ stack m
-        res = a - b
-
-eval m Multiply =
-  return m { stack = res:(drop 2 (stack m)),
-             pc = (pc m) + 1 }
-  where a = head $ tail $ stack m
-        b = head $ stack m
-        res = a * b
-
-eval m Divide =
-  return m { stack = res:(drop 2 (stack m)),
-             pc = (pc m) + 1 }
-  where a = head $ tail $ stack m
-        b = head $ stack m
-        res = a `div` b
-
-eval m Modulo =
-  return m { stack = res:(drop 2 (stack m)),
-             pc = (pc m) + 1 }
-  where a = head $ tail $ stack m
-        b = head $ stack m
-        res = a `mod` b
+eval m Add      = arith m (+)
+eval m Subtract = arith m (-)
+eval m Multiply = arith m (*)
+eval m Divide   = arith m div
+eval m Modulo   = arith m mod
