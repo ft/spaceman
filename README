@@ -1,0 +1,25 @@
+Spaceman — A Whitespace Implementation
+--------------------------------------
+
+Spaceman is a whitespace interpreter written in Haskell. It uses Megaparsec for
+parsing purposes and a simple stack  machine that reflects the operation of the
+whitespace language.
+
+
+Quickstart:
+
+    % cabal configure
+    % cabal build
+    % cabal run spaceman -- ./examples/hello-world.ws
+    Hello World!
+    % cabal run spaceman -- ./examples/count.ws
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
