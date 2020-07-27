@@ -7,18 +7,6 @@ import qualified SpaceMan.Alphabet as WS
 import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Parser
 
--- Instruction Manipulation Parameter
-imp :: [Char] -> Parser ()
-imp [] = return ()
-imp (x:xs) = do
-  whitespaceOperator x
-  imp xs
-
-operation :: [Char] -> a -> Parser a
-operation xs op = do
-  void $ imp xs
-  return op
-
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
   (      try $ imp       [ WS.tabular, WS.space ])
@@ -42,13 +30,6 @@ heapParser = do
   (      try $ operation [ WS.space   ] Store)
     <|> (try $ operation [ WS.tabular ] Fetch)
 
-pushIntegerParser :: Parser StackOperation
-pushIntegerParser = do
-  imp [ WS.space ] <?> "<space>"
-  ns <- whitespaceInteger
-  imp [ WS.linefeed ] <?> "<linefeed>"
-  return $ Push ns
-
 stackParser :: Parser StackOperation
 stackParser = do
   (      try $ imp       [ WS.space ])
@@ -56,13 +37,6 @@ stackParser = do
     <|> (try $ operation [ WS.linefeed, WS.space    ] Duplicate)
     <|> (try $ operation [ WS.linefeed, WS.tabular  ] Swap)
     <|> (try $ operation [ WS.linefeed, WS.linefeed ] Drop)
-
-tag :: [Char] -> Parser Label
-tag xs = do
-  void $ imp xs
-  l <- whitespaceLabel
-  imp [ WS.linefeed ] <?> "<linefeed>"
-  return l
 
 flowControlParser :: Parser FlowControlOperation
 flowControlParser = do

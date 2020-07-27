@@ -4,7 +4,12 @@ module SpaceMan.Parser (Parser, ParserError,
                         discardOthers,
                         whitespaceInteger,
                         whitespaceLabel,
-                        whitespaceOperator) where
+                        whitespaceOperator,
+                        pushIntegerParser,
+                        tag,
+                        imp,
+                        operation)
+where
 
 import Control.Monad
 import Data.Void
@@ -64,3 +69,29 @@ char2label c = if (c == WS.space) then 's'
 whitespaceLabel :: Parser Label
 whitespaceLabel = map char2label
                   <$> takeWhile1P Nothing WS.fromLabelAlphabet
+
+pushIntegerParser :: Parser StackOperation
+pushIntegerParser = do
+  imp [ WS.space ] <?> "<space>"
+  ns <- whitespaceInteger
+  imp [ WS.linefeed ] <?> "<linefeed> [end-of-integer]"
+  return $ Push ns
+
+tag :: [Char] -> Parser Label
+tag xs = do
+  void $ imp xs
+  l <- whitespaceLabel
+  imp [ WS.linefeed ] <?> "<linefeed>"
+  return l
+
+-- Instruction Manipulation Parameter
+imp :: [Char] -> Parser ()
+imp [] = return ()
+imp (x:xs) = do
+  whitespaceOperator x
+  imp xs
+
+operation :: [Char] -> a -> Parser a
+operation xs op = do
+  void $ imp xs
+  return op
