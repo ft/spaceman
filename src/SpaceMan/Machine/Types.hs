@@ -9,9 +9,9 @@ import SpaceMan.AbstractSyntaxTree
 
 import Control.Monad
 
-type JumpTable = [(String, Integer)]
+type JumpTable = [(Label, Integer)]
 
-getLabelAddress :: JumpTable -> String -> Integer
+getLabelAddress :: JumpTable -> Label -> Integer
 getLabelAddress [] _ = 0
 getLabelAddress ((tag,address):xs) t =
   if (tag == t) then address

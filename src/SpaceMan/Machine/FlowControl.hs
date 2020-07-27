@@ -8,7 +8,7 @@ import SpaceMan.Machine.Types
 
 type Comparison = (Integer -> Integer -> Bool)
 
-jmp :: WhitespaceMachine -> String -> Comparison -> IO WhitespaceMachine
+jmp :: WhitespaceMachine -> Label -> Comparison -> IO WhitespaceMachine
 jmp m tag op = return $ pcl n $ drp 1 m
   where a = lbl tag m
         [v] = peek 1 m

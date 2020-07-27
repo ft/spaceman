@@ -2,6 +2,7 @@ module SpaceMan.Machine.Tools (csa, csd, csp,
                                drp, lbl, lda, pci, pcl, peek, psh, sto)
 where
 
+import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Machine.Types
 
 peek :: Integer -> WhitespaceMachine -> [Integer]
@@ -19,7 +20,7 @@ pci m = m { pc = (pc m) + 1 }
 pcl :: Integer -> WhitespaceMachine -> WhitespaceMachine
 pcl a m = m { pc = a }
 
-lbl :: String -> WhitespaceMachine -> Integer
+lbl :: Label -> WhitespaceMachine -> Integer
 lbl t m = getLabelAddress (jump m) t
 
 csd :: WhitespaceMachine -> WhitespaceMachine
