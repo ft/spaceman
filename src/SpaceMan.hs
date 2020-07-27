@@ -1,5 +1,6 @@
 import System.Environment (getArgs)
 import Text.Megaparsec (parse)
+import Text.Megaparsec.Error (errorBundlePretty)
 
 import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Interpreter
@@ -7,7 +8,7 @@ import SpaceMan.Language
 import SpaceMan.Parser
 
 execute :: Either ParserError WhitespaceProgram -> IO ()
-execute (Left msg) = putStrLn $ show msg
+execute (Left msg) = putStrLn $ errorBundlePretty msg
 execute (Right prg) = run machine
   where machine = load prg
 
