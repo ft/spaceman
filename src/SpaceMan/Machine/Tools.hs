@@ -6,7 +6,7 @@ module SpaceMan.Machine.Tools (
   -- Call Stack Instructions
   csp, csd, csa,
   -- Process Counter Instructions
-  pci, pcl, pcn,
+  pci, pcl, pcn, ldi,
   -- Jump Table Instructions
   lbl)
 where
@@ -69,6 +69,10 @@ pci m = m { pc = pcn m }
 -- ProcessCounterLoad: Load an arbitrary address into process counter
 pcl :: Address -> WhitespaceMachine -> WhitespaceMachine
 pcl a m = m { pc = a }
+
+-- LoadInstruction: Load instruction from program memory based on PC
+ldi :: WhitespaceMachine -> WhitespaceExpression
+ldi m = (program m) !! (fromInteger $ pc m)
 
 
 -- Jump Table Instructions

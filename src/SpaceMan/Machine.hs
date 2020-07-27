@@ -1,6 +1,7 @@
 module SpaceMan.Machine (machineStep, runMachine) where
 
 import SpaceMan.AbstractSyntaxTree
+import SpaceMan.Machine.Tools
 import SpaceMan.Machine.Types
 
 import qualified SpaceMan.Machine.Arithmetic as Arith
@@ -20,4 +21,4 @@ runMachine :: WhitespaceMachine -> IO ()
 runMachine m = do
   nextState <- machineStep m instruction
   runMachine nextState
-  where instruction = (program m) !! (fromInteger $ pc m)
+  where instruction = ldi m
