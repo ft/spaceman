@@ -4,7 +4,9 @@ import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Machine.Tools
 import SpaceMan.Machine.Types
 
-arith :: WhitespaceMachine -> (Integer -> Integer -> Integer) -> IO WhitespaceMachine
+type Operator = (Integer -> Integer -> Integer)
+
+arith :: WhitespaceMachine -> Operator -> IO WhitespaceMachine
 arith m op = return $ pci $ psh [l `op` r] $ drp 2 m
   where [r,l] = peek 2 m
 
