@@ -5,7 +5,7 @@ import SpaceMan.Machine.Tools
 import SpaceMan.Machine.Types
 
 arith :: WhitespaceMachine -> (Integer -> Integer -> Integer) -> IO WhitespaceMachine
-arith m op = return $ pci $ psh [l `op` r] $ drp 1 m
+arith m op = return $ pci $ psh [l `op` r] $ drp 2 m
   where [r,l] = peek 2 m
 
 eval :: WhitespaceMachine -> ArithmeticOperation -> IO WhitespaceMachine
