@@ -8,7 +8,7 @@ import SpaceMan.Parser
 
 execute :: Either ParserError WhitespaceProgram -> IO ()
 execute (Left msg) = putStrLn $ show msg
-execute (Right prg) = do run machine
+execute (Right prg) = run machine
   where machine = load prg
 
 runit :: String -> IO ()
