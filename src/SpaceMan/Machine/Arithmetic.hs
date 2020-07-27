@@ -11,7 +11,6 @@ arith m op = return $ pci $ psh [l `op` r] $ drp 2 m
   where [r,l] = peek 2 m
 
 eval :: WhitespaceMachine -> ArithmeticOperation -> IO WhitespaceMachine
-
 eval m Add      = arith m (+)
 eval m Subtract = arith m (-)
 eval m Multiply = arith m (*)
