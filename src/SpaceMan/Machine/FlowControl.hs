@@ -6,7 +6,7 @@ import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Machine.Tools
 import SpaceMan.Machine.Types
 
-type Predicate = (Integer -> Bool)
+type Predicate = (Value -> Bool)
 
 jmp :: WhitespaceMachine -> Label -> Predicate -> IO WhitespaceMachine
 jmp m tag p = return $ pcl n $ drp 1 m

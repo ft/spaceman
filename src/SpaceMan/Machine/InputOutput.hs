@@ -22,4 +22,4 @@ eval m ReadCharacter = do
 
 eval m ReadNumber = do
   c <- getLine
-  return $ pci $ psh [read $ c :: Integer] m
+  return $ pci $ psh [read $ c :: Value] m

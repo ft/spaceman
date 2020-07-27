@@ -3,15 +3,16 @@ module SpaceMan.Machine.Types (extractJumpTable,
                                heapFetch,
                                heapStore,
                                loadTheMachine,
+                               Address, Value,
                                WhitespaceMachine(..)) where
 
 import SpaceMan.AbstractSyntaxTree
 
 import Control.Monad
 
-type JumpTable = [(Label, Integer)]
+type JumpTable = [(Label, Address)]
 
-getLabelAddress :: JumpTable -> Label -> Integer
+getLabelAddress :: JumpTable -> Label -> Address
 getLabelAddress [] _ = 0
 getLabelAddress ((tag,address):xs) t =
   if (tag == t) then address
@@ -54,7 +55,7 @@ data WhitespaceMachine = WhitespaceMachine
     stack     :: Stack,
     callStack :: Stack,
     heap      :: Heap,
-    pc        :: Integer,
+    pc        :: Address,
     jump      :: JumpTable,
     program   :: WhitespaceProgram
   } deriving (Show, Eq)
