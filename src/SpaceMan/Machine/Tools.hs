@@ -6,7 +6,7 @@ module SpaceMan.Machine.Tools (
   -- Call Stack Instructions
   csp, csd, csa,
   -- Process Counter Instructions
-  pci, pcl,
+  pci, pcl, pcn,
   -- Jump Table Instructions
   lbl)
 where
@@ -58,9 +58,13 @@ csa m = head $ callStack m
 
 -- Process Counter Register Instructions
 
+-- ProcessCounterNext: Return the next regular process counter value
+pcn :: WhitespaceMachine -> Integer
+pcn m = (pc m) + 1
+
 -- ProcessCounterIncrement: Move process counter forward one address
 pci :: WhitespaceMachine -> WhitespaceMachine
-pci m = m { pc = (pc m) + 1 }
+pci m = m { pc = pcn m }
 
 -- ProcessCounterLoad: Load an arbitrary address into process counter
 pcl :: Integer -> WhitespaceMachine -> WhitespaceMachine

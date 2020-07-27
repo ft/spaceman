@@ -12,7 +12,7 @@ jmp :: WhitespaceMachine -> Label -> Predicate -> IO WhitespaceMachine
 jmp m tag p = return $ pcl n $ drp 1 m
   where a = lbl tag m
         [v] = peek 1 m
-        n = if (p v) then a else (pc m) + 1
+        n = if (p v) then a else pcn m
 
 eval :: WhitespaceMachine -> FlowControlOperation -> IO WhitespaceMachine
 eval m (Tag _)              = return $ pci m
