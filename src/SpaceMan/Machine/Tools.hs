@@ -17,7 +17,7 @@ import SpaceMan.Machine.Types
 
 -- Stack Memory Instructions
 
--- Push: Put a new element on top of the stack.
+-- Push: Put new elements on top of the stack.
 psh :: [Integer] -> WhitespaceMachine -> WhitespaceMachine
 psh lst m = m { stack = lst ++ (stack m) }
 
