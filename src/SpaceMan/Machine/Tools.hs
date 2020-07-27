@@ -1,5 +1,14 @@
-module SpaceMan.Machine.Tools (csa, csd, csp,
-                               drp, lbl, lda, pci, pcl, peek, psh, sto)
+module SpaceMan.Machine.Tools (
+  -- Stack Memory Instructions
+  psh, drp, peek,
+  -- Heap Memory Instructions
+  sto, lda,
+  -- Call Stack Instructions
+  csp, csd, csa,
+  -- Process Counter Instructions
+  pci, pcl,
+  -- Jump Table Instructions
+  lbl)
 where
 
 import SpaceMan.AbstractSyntaxTree
@@ -21,7 +30,7 @@ peek :: Integer -> WhitespaceMachine -> [Integer]
 peek n m = take (fromInteger n) $ stack m
 
 
--- Heap Instructions
+-- Heap Memory Instructions
 
 -- Store: Put a value into a given address of the machine's heap memory
 sto :: Integer -> Integer -> WhitespaceMachine -> WhitespaceMachine
@@ -34,13 +43,13 @@ lda a m = heapFetch (heap m) a
 
 -- Call Stack Instructions
 
--- CallStackDrop: Remove top-most element from call-stack
-csd :: WhitespaceMachine -> WhitespaceMachine
-csd m = m { callStack = tail (callStack m) }
-
 -- CallStackPush: Put new element onto the top of the call-stack
 csp :: WhitespaceMachine -> WhitespaceMachine
 csp m = m { callStack = (pc m):(callStack m) }
+
+-- CallStackDrop: Remove top-most element from call-stack
+csd :: WhitespaceMachine -> WhitespaceMachine
+csd m = m { callStack = tail (callStack m) }
 
 -- CallStackAddress: Return top-most value from call-stack
 csa :: WhitespaceMachine -> Integer
@@ -58,7 +67,7 @@ pcl :: Integer -> WhitespaceMachine -> WhitespaceMachine
 pcl a m = m { pc = a }
 
 
--- JumpTable Instructions
+-- Jump Table Instructions
 
 -- Label: Returns address of given label
 lbl :: Label -> WhitespaceMachine -> Integer
