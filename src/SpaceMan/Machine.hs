@@ -11,11 +11,11 @@ import qualified SpaceMan.Machine.MemoryHeap as MemHeap
 import qualified SpaceMan.Machine.MemoryStack as MemStack
 
 machineStep :: WhitespaceMachine -> WhitespaceExpression -> IO WhitespaceMachine
-machineStep m (StackManipulation s) = MemStack.eval m s
-machineStep m (Arithmetic a)        = Arith.eval m a
-machineStep m (HeapAccess h)        = MemHeap.eval m h
-machineStep m (FlowControl f)       = FlowControl.eval m f
-machineStep m (InputOutput io)      = InOut.eval m io
+machineStep m (StackManipulation e) = MemStack.eval    m e
+machineStep m (Arithmetic        e) = Arith.eval       m e
+machineStep m (HeapAccess        e) = MemHeap.eval     m e
+machineStep m (FlowControl       e) = FlowControl.eval m e
+machineStep m (InputOutput       e) = InOut.eval       m e
 
 runMachine :: WhitespaceMachine -> IO ()
 runMachine m = do
