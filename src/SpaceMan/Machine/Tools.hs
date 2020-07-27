@@ -62,13 +62,13 @@ csa m = head $ callStack m
 pcn :: WhitespaceMachine -> Address
 pcn m = (pc m) + 1
 
--- ProcessCounterIncrement: Move process counter forward one address
-pci :: WhitespaceMachine -> WhitespaceMachine
-pci m = m { pc = pcn m }
-
 -- ProcessCounterLoad: Load an arbitrary address into process counter
 pcl :: Address -> WhitespaceMachine -> WhitespaceMachine
 pcl a m = m { pc = a }
+
+-- ProcessCounterIncrement: Move process counter forward one address
+pci :: WhitespaceMachine -> WhitespaceMachine
+pci m = pcl (pcn m) m
 
 -- LoadInstruction: Load instruction from program memory based on PC
 ldi :: WhitespaceMachine -> WhitespaceExpression
