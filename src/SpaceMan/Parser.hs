@@ -36,7 +36,8 @@ whitespaceOperator op = do
   discardOthers
 
 char2bit :: Char -> IntegerBit
-char2bit c = if (c == WS.space) then Zero
+char2bit c = if (c == WS.space)
+             then Zero
              else One
 
 bitToInteger :: IntegerBit -> Integer
@@ -57,18 +58,22 @@ listToInteger (_:[]) = 0
 listToInteger (Zero:ns) = listToInteger'  ns
 listToInteger (One:ns) = -1 * listToInteger'  ns
 
-whitespaceInteger :: Parser Integer
-whitespaceInteger = listToInteger
-                    <$> map char2bit
-                    <$> takeWhile1P Nothing WS.fromIntegerAlphabet
+spaceTabString :: Parser IntegerString
+spaceTabString = do
+  raw <- takeWhile1P Nothing notLF
+  return $ map char2bit $ filter WS.fromIntegerAlphabet raw
+  where notLF = not . (== WS.linefeed)
 
-char2label :: Char -> Char
-char2label c = if (c == WS.space) then 's'
-               else 'T'
+whitespaceInteger :: Parser Integer
+whitespaceInteger = listToInteger <$> spaceTabString
+
+bit2char :: IntegerBit -> Char
+bit2char c = if (c == Zero)
+             then 's'
+             else 'T'
 
 whitespaceLabel :: Parser Label
-whitespaceLabel = map char2label
-                  <$> takeWhile1P Nothing WS.fromLabelAlphabet
+whitespaceLabel = map bit2char <$> spaceTabString
 
 pushIntegerParser :: Parser StackOperation
 pushIntegerParser = do
@@ -81,7 +86,7 @@ tag :: [Char] -> Parser Label
 tag xs = do
   void $ imp xs
   l <- whitespaceLabel
-  imp [ WS.linefeed ] <?> "<linefeed>"
+  imp [ WS.linefeed ] <?> "<linefeed> [end-of-label]"
   return l
 
 -- Instruction Manipulation Parameter
