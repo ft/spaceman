@@ -24,5 +24,5 @@ eval m ReadCharacter = do
   return $ pci $ psh [toInteger $ ord c] m
 
 eval m ReadNumber = do
-  c <- getLine
-  return $ pci $ psh [read $ c :: Value] m
+  n <- getLine
+  return $ pci $ psh [read $ n :: Value] m
