@@ -1,4 +1,7 @@
-import System.Environment (getArgs)
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# OPTIONS_GHC -fno-cse #-}
+
+import System.Console.CmdArgs
 import Text.Megaparsec (parse)
 import Text.Megaparsec.Error (errorBundlePretty)
 
@@ -6,24 +9,66 @@ import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Interpreter
 import SpaceMan.Language
 import SpaceMan.Parser
+import SpaceMan.Transform
 
-execute :: Either ParserError WhitespaceProgram -> IO ()
-execute (Left msg) = putStrLn $ errorBundlePretty msg
-execute (Right prg) = run machine
-  where machine = load prg
+data SpacemanArguments = SpacemanArguments
+  { dumpAST         :: Bool,
+    transformLabels :: Bool,
+    fileName        :: String }
+  deriving (Show, Data, Typeable)
+
+type Process = WhitespaceProgram -> IO ()
+type ParseResult = Either ParserError WhitespaceProgram
+
+process :: Process -> ParseResult -> IO ()
+process _ (Left msg) = putStrLn $ errorBundlePretty msg
+process p (Right prg) = p prg
+
+readParseProcess :: Process -> String -> IO ()
+readParseProcess p f = do
+  content <- readFile f
+  process p $ parse whitespaceRead f content
+
+dumpProgram :: Process
+dumpProgram [] = return ()
+dumpProgram (p:ps) = do
+  putStrLn $ show p
+  dumpProgram ps
 
 runit :: String -> IO ()
-runit f = do
-  content <- readFile f
-  execute $ parse whitespaceRead f content
+runit = readParseProcess (\p -> run $ load p)
 
-usage :: IO ()
-usage = do
-  putStrLn "SpaceMan - A Whitespace implementation"
-  putStrLn "usage: spaceman FILE"
+dumpit :: String -> IO ()
+dumpit = readParseProcess (\p -> dumpProgram $ labelNames p)
+
+dumpitRaw :: String -> IO ()
+dumpitRaw = readParseProcess (\p -> dumpProgram p)
+
+config = cmdArgsMode $ SpacemanArguments {
+  dumpAST = False &= explicit
+          &= help "Dump Program AST instead of executing"
+          &= name "dump-ast"
+          &= name "d",
+  transformLabels = False &= explicit
+                  &= help "Transform Label Names to ASCII"
+                  &= name "transform-labels"
+                  &= name "t",
+  fileName = def
+           &= typ "SourceFile"
+           &= argPos 0
+  } &= summary "SpaceMan v0.1.0 - A Whitespace Implementation"
+    &= help    "Execute whitespace source code"
+    &= program "spaceman"
+    &= helpArg [explicit, name "h", name "help"]
 
 main :: IO ()
 main = do
-  args <- getArgs
-  if (length args) /= 1 then usage
-                        else runit $ head args
+  args <- cmdArgsRun config
+  let dump = dumpAST args
+      input = fileName args
+      trans = transformLabels args
+    in
+    if dump == True
+    then if trans == True then dumpit input
+                          else dumpitRaw input
+    else runit input
