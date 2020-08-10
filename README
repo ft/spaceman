@@ -23,3 +23,38 @@ Quickstart:
     8
     9
     10
+    % cabal run spaceman -- ./examples/sudoku.ws
+    Sudoku Solver - written in Whitespace!
+
+            Instructions:
+
+    Please enter a 9x9 grid of numbers (0-9).
+    Do not put spaces between the numbers.
+    '0' represents an empty cell:
+
+    530070000
+    600195000
+    098000060
+    800060003
+    400803001
+    700020006
+    060000280
+    000419005
+    000080079
+
+    Please be patient.
+    Easy sudokus typically take a minute or two on my Core 2 Duo.
+
+     534 678 912
+     672 195 348
+     198 342 567
+
+     859 761 423
+     426 853 791
+     713 924 856
+
+     961 537 284
+     287 419 635
+     345 286 179
+
+    Success!
