@@ -34,6 +34,8 @@ stackParser :: Parser StackOperation
 stackParser = do
   (      try $ imp       [ WS.space ])
   (      try $ pushIntegerParser)
+    <|> (try $ copyIntegerParser)
+    <|> (try $ slideIntegerParser)
     <|> (try $ operation [ WS.linefeed, WS.space    ] Duplicate)
     <|> (try $ operation [ WS.linefeed, WS.tabular  ] Swap)
     <|> (try $ operation [ WS.linefeed, WS.linefeed ] Drop)

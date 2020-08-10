@@ -28,11 +28,11 @@ numbers). The heap can also be accessed by the user as a permanent store of
 variables and data structures.
 
 Many commands require numbers or labels as parameters. Numbers can be any
-number of bits wide, and are simply represented as a series of ~[Space] and
-[Tab], terminated by a [LF]. [Space]~ represents the binary digit 0, ~[Tab]~
-represents 1. The sign of a number is given by its first character, ~[Space]
-for positive and [Tab]~ for negative. Note that this is /not/ twos complement,
-it just indicates a sign.
+number of bits wide, and are simply represented as a series of ~[Space]~ and
+~[Tab]~, terminated by a ~[LF]~. ~[Space]~ represents the binary digit 0,
+~[Tab]~ represents 1. The sign of a number is given by its first character,
+~[Space]~ for positive and ~[Tab]~ for negative. Note that this is /not/ twos
+complement, it just indicates a sign.
 
 Labels are simply ~[LF]~ terminated lists of spaces and tabs. There is only one
 global namespace so all labels must be unique.
@@ -43,12 +43,14 @@ global namespace so all labels must be unique.
 Stack manipulation is one of the more common operations, hence the shortness of
 the IMP ~[Space]~. There are four stack instructions.
 
-| Command       | Parameters | Meaning                             |
-|---------------+------------+-------------------------------------|
-| ~[Space]~     | Number     | Push the number onto the stack      |
-| ~[LF][Space]~ | -          | Duplicate the top item on the stack |
-| ~[LF][Tab]~   | -          | Swap the top two items on the stack |
-| ~[LF][LF]~    | -          | Discard the top item on the stack   |
+| Command        | Parameters | Meaning                                    |
+|----------------+------------+--------------------------------------------|
+| ~[Space]~      | Number     | Push the number onto the stack             |
+| ~[LF][Space]~  | -          | Duplicate the top item on the stack        |
+| ~[LF][Tab]~    | -          | Swap the top two items on the stack        |
+| ~[LF][LF]~     | -          | Discard the top item on the stack          |
+| ~[Tab][Space]~ | Number     | Copy indexed entry on stack to its top     |
+| ~[Tab][LF]~    | Number     | Drop n items after leaving top item intact |
 
 
 * Arithmetic (IMP: ~[Tab][Space]~)

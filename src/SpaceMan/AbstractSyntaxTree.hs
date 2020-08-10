@@ -19,8 +19,10 @@ type Label = String
 
 data StackOperation = Push Integer
                     | Duplicate
+                    | Copy Integer
                     | Swap
                     | Drop
+                    | Slide Integer
   deriving (Show, Eq)
 
 data ArithmeticOperation = Add

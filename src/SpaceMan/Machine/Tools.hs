@@ -1,6 +1,6 @@
 module SpaceMan.Machine.Tools (
   -- Stack Memory Instructions
-  psh, drp, peek,
+  psh, drp, peek, ref,
   -- Heap Memory Instructions
   sto, lda,
   -- Call Stack Instructions
@@ -29,6 +29,9 @@ drp n m = m { stack = drop (fromInteger n) $ stack m }
 peek :: Integer -> WhitespaceMachine -> [Value]
 peek n m = take (fromInteger n) $ stack m
 
+-- Ref: Reference item on stack
+ref :: Integer -> WhitespaceMachine -> Value
+ref i m = (stack m) !! fromInteger i
 
 -- Heap Memory Instructions
 
