@@ -20,9 +20,11 @@ eval m PrintNumber = do
   return $ pci $ drp 1 m
 
 eval m ReadCharacter = do
-  c <- getChar
-  return $ pci $ psh [toInteger $ ord c] m
+  raw <- getChar
+  let c = toInteger $ ord raw in
+    return $ pci $ sto a c $ drp 1 m    where [a] = peek 1 m
 
 eval m ReadNumber = do
-  n <- getLine
-  return $ pci $ psh [read $ n :: Value] m
+  raw <- getLine
+  let n = read $ raw :: Value in
+    return $ pci $ sto a n $ drp 1 m    where [a] = peek 1 m
