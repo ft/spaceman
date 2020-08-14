@@ -1,0 +1,136 @@
+# 
+
+## Features
+
+Why Whitespace!?
+
+- Turing complete.
+- Large eco-system with thousands upon thousands of modules.
+- Your code looks actually *clean*.
+
+
+## Features
+
+Why Whitespace!?
+
+- Turing complete.
+- ~~Large eco-system with thousands upon thousands of modules~~.
+- Your code looks actually *clean*.
+
+
+## Features
+
+Why Whitespace!?
+
+- Turing complete — well, probably.
+- ~~Large eco-system with thousands upon thousands of modules~~.
+- Your code looks actually *clean*.
+
+
+## How does it work?
+
+Whitespace uses three whitespace characters from the ASCII encoding:
+
+- `0x20` — `SPC`
+- `0x0a` — `LF`
+- `0x09` — `TAB`
+- *Everything else* is a comment.
+
+
+## How does it work?
+
+Execution works by applying instructions to a Stack Machine
+
+- Stack: `Push Duplicate Swap Drop Copy Slide`
+- Heap: `Store Fetch`
+- Arithmetic: `+` ` ` `-` ` ` `×` ` ` `÷` ` ` `Modulo`
+- FlowControl: `Tag Call Jump JumpIfZero JumpIfNegative Return Exit`
+- InputOutput: `ReadCharacter ReadNumber WriteCharacter WriteNumber`
+
+
+## How does it work?
+
+\vspace{-1cm}
+There is one type of data in Whitespace:
+
+- Signed Integers…
+- …of arbitrary size.
+- Literals in program text use signed-magnitude binary encoding.
+- Used for: Data (Numbers and Characters), Addresses (Stack and Heap), etc.
+
+[simg:h=2.5cm:(4cm,0.5cm)|graphics/numbers.pdf]
+
+## How does it work?
+
+Similarly, labels are strings like that as well:
+
+- There is just one name space, and labels have to be unique.
+- So you can't use the same label in two `Tag` calls.
+
+\vspace{1.5cm}
+
+- Some code uses multiples of eight as the bits in the labels…
+- …treat the datum as an unsigned integer…
+- …then they map that to ASCII: The example here would be `0x55` → `U`
+- That is not at all required: `[SPC][LF]` is a perfectly fine label.
+
+[simg:h=1.7cm:(4cm,3.5cm)|graphics/labels.pdf]
+
+
+## How does it work?
+
+Virtual Machine Design:
+
+- Stack memory — Main argument memory for most instructions
+- Heap memory — Utility memory
+- Program memory — The actual code to run
+- Program Counter — The index into program memory
+- Jump Table — For all the `Jump` and `Call` instructions
+- Call Stack — Because there are the `Call` and `Return` instruction
+
+
+## How about implementing it?
+
+```.haskell
+data WhitespaceMachine = WhitespaceMachine
+  {
+    stack     :: Stack,
+    callStack :: Stack,
+    heap      :: Heap,
+    pc        :: Address,
+    jump      :: JumpTable,         -- Maps a Label to an Address
+    program   :: WhitespaceProgram  -- [WhitespaceExpression]
+  } deriving (Show, Eq)
+```
+
+
+## How about implementing it?
+
+```.haskell
+data WhitespaceExpression = StackManipulation StackOperation
+                          | Arithmetic ArithmeticOperation
+                          | HeapAccess HeapOperation
+                          | FlowControl FlowControlOperation
+                          | InputOutput InputOutputOperation
+
+data FlowControlOperation = Tag Label
+                          | Call Label
+                          | Jump Label
+                          | JumpIfZero Label
+                          | JumpIfNegative Label
+                          | Return
+                          | ExitFromProgram
+```
+
+
+## How about implementing it?
+
+```.haskell
+  [ StackManipulation (Push 11),
+    StackManipulation (Push 33),
+    Arithmetic Add,
+    InputOutput PrintNumber,
+    FlowControl ExitFromProgram ]
+```
+
+# — Fin —
