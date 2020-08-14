@@ -133,4 +133,76 @@ data FlowControlOperation = Tag Label
     FlowControl ExitFromProgram ]
 ```
 
+…what is left to do?
+
+
+## How about implementing it?
+
+```.haskell
+whitespaceParser :: Parser WhitespaceExpression
+whitespaceParser =
+  (    StackManipulation  <$> stackParser)
+  <|> (Arithmetic         <$> arithmeticParser)
+  <|> (HeapAccess         <$> heapParser)
+  <|> (FlowControl        <$> flowControlParser)
+  <|> (InputOutput        <$> ioParser)
+
+heapParser :: Parser HeapOperation
+heapParser = do
+  (      try $ imp       [ WS.tabular, WS.tabular ])
+  (      try $ operation [ WS.space   ] Store)
+    <|> (try $ operation [ WS.tabular ] Fetch)
+```
+
+
+## How about implementing it?
+
+```.haskell
+module SpaceMan.Machine.Tools (
+  psh, drp, peek, ref, -- Stack Memory Instructions
+  sto, lda,            -- Heap Memory Instructions
+  csp, csd, csa,       -- Call Stack Instructions
+  pci, pcl, pcn, ldi,  -- Process Counter Instructions
+  lbl)                 -- Jump Table Instructions
+where
+```
+
+
+## How about implementing it?
+
+```.haskell
+jmp :: WhitespaceMachine -> Label -> Predicate -> IO WhitespaceMachine
+jmp m tag p = return $ pcl n $ drp 1 m
+  where a = lbl tag m
+        [v] = peek 1 m
+        n = if (p v) then a else pcn m
+
+eval :: WhitespaceMachine -> FlowControlOperation -> IO WhitespaceMachine
+eval m (Tag _)              = return $ pci m
+eval m (Call tag)           = return $ pcl a $ csp m where a = lbl tag m
+eval m (Jump tag)           = return $ pcl a m       where a = lbl tag m
+eval m (JumpIfZero tag)     = jmp m tag (== 0)
+eval m (JumpIfNegative tag) = jmp m tag (<  0)
+eval m Return               = return $ pcl a $ csd m where a = 1+(csa m)
+eval _ ExitFromProgram      = exitSuccess
+```
+
+
+# — Demo Time! —
+
+
+## That's all folks!
+
+That was…
+
+- what Whitespace *is*.
+- what it can *do*.
+- what its values *look* like.
+- how to *design* a virtual machine for it.
+- how its program's intermediate representation can be *expressed*.
+- how to *parse* program text into that representation.
+- how the virtual machine can *run* that representation.
+- seeing it *work*.
+
+
 # — Fin —
