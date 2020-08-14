@@ -3,3 +3,13 @@
 *.lock
 cabal.project.local
 dist-newstyle/
+doc/slides/graphics/*.pdf
+doc/slides/slides.tex
+doc/slides/*.pdf
+doc/slides/*.aux
+doc/slides/*.log
+doc/slides/*.nav
+doc/slides/*.out
+doc/slides/*.snm
+doc/slides/*.toc
+doc/slides/*.vrb
