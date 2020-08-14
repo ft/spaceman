@@ -205,4 +205,12 @@ That was…
 - seeing it *work*.
 
 
+## Interested?
+
+SpaceMan Implementation can be found here:
+
+- http://github.com/ft/spaceman
+- http://gitlab.com/ft/spaceman
+
+
 # — Fin —
