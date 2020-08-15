@@ -1,32 +1,5 @@
 # 
 
-## Features
-
-Why Whitespace!?
-
-- Turing complete.
-- Large eco-system with thousands upon thousands of modules.
-- Your code looks actually *clean*.
-
-
-## Features
-
-Why Whitespace!?
-
-- Turing complete.
-- ~~Large eco-system with thousands upon thousands of modules~~.
-- Your code looks actually *clean*.
-
-
-## Features
-
-Why Whitespace!?
-
-- Turing complete — well, probably.
-- ~~Large eco-system with thousands upon thousands of modules~~.
-- Your code looks actually *clean*.
-
-
 ## How does it work?
 
 Whitespace uses three whitespace characters from the ASCII encoding:
@@ -215,6 +188,33 @@ SpaceMan Implementation can be found here:
 # — Fin —
 
 # — Extra Slides —
+
+## Features
+
+Why Whitespace!?
+
+- Turing complete.
+- Large eco-system with thousands upon thousands of modules.
+- Your code looks actually *clean*.
+
+
+## Features
+
+Why Whitespace!?
+
+- Turing complete.
+- ~~Large eco-system with thousands upon thousands of modules~~.
+- Your code looks actually *clean*.
+
+
+## Features
+
+Why Whitespace!?
+
+- Turing complete — well, probably.
+- ~~Large eco-system with thousands upon thousands of modules~~.
+- Your code looks actually *clean*.
+
 
 ## How about implementing it?
 
