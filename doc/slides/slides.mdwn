@@ -50,18 +50,6 @@ Similarly, labels are strings like that as well:
 [simg:h=1.7cm:(4cm,3.5cm)|graphics/labels.pdf]
 
 
-## How does it work?
-
-Virtual Machine Design:
-
-- Stack memory — Main argument memory for most instructions
-- Heap memory — Utility memory
-- Program memory — The actual code to run
-- Program Counter — The index into program memory
-- Jump Table — For all the `Jump` and `Call` instructions
-- Call Stack — Because there are the `Call` and `Return` instruction
-
-
 ## How about implementing it?
 
 ```.haskell
@@ -214,6 +202,18 @@ Why Whitespace!?
 - Turing complete — well, probably.
 - ~~Large eco-system with thousands upon thousands of modules~~.
 - Your code looks actually *clean*.
+
+
+## How does it work?
+
+Virtual Machine Design:
+
+- Stack memory — Main argument memory for most instructions
+- Heap memory — Utility memory
+- Program memory — The actual code to run
+- Program Counter — The index into program memory
+- Jump Table — For all the `Jump` and `Call` instructions
+- Call Stack — Because there are the `Call` and `Return` instruction
 
 
 ## How about implementing it?
