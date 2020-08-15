@@ -96,15 +96,15 @@ data HeapOperation = Store | Fetch
 | IMP            | Meaning            |
 |----------------+--------------------|
 | `[Space]`      | Stack Manipulation |
-| `[Tab][Space]` | Arithmetic         |
-| `[Tab][Tab]`   | Heap access        |
 | `[LF]`         | Flow Control       |
+| `[Tab][Tab]`   | Heap access        |
+| `[Tab][Space]` | Arithmetic         |
 | `[Tab][LF]`    | I/O                |
 
-| Heap Command | Meaning  |
-|--------------|----------|
-| `[Space]`    | Store    |
-| `[Tab]`      | Retrieve |
+| Heap Command | Meaning |
+|--------------|---------|
+| `[Space]`    | Store   |
+| `[Tab]`      | Fetch   |
 
 ## How about implementing it?
 
