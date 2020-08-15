@@ -138,6 +138,21 @@ data FlowControlOperation = Tag Label
 
 ## How about implementing it?
 
+| IMP            | Meaning            |
+|----------------+--------------------|
+| `[Space]`      | Stack Manipulation |
+| `[Tab][Space]` | Arithmetic         |
+| `[Tab][Tab]`   | Heap access        |
+| `[LF]`         | Flow Control       |
+| `[Tab][LF]`    | I/O                |
+
+| Heap Command | Meaning  |
+|--------------|----------|
+| `[Space]`    | Store    |
+| `[Tab]`      | Retrieve |
+
+## How about implementing it?
+
 ```.haskell
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser =
