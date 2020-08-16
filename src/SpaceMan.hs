@@ -32,17 +32,17 @@ readParseProcess p f = do
 dumpProgram :: Process
 dumpProgram [] = return ()
 dumpProgram (p:ps) = do
-  putStrLn $ show p
+  print p
   dumpProgram ps
 
 runit :: String -> IO ()
-runit = readParseProcess (\p -> run $ load p)
+runit = readParseProcess (run . load)
 
 dumpit :: String -> IO ()
-dumpit = readParseProcess (\p -> dumpProgram $ labelNames p)
+dumpit = readParseProcess (dumpProgram . labelNames)
 
 dumpitRaw :: String -> IO ()
-dumpitRaw = readParseProcess (\p -> dumpProgram p)
+dumpitRaw = readParseProcess dumpProgram
 
 config = cmdArgsMode $ SpacemanArguments {
   dumpAST = False &= explicit
@@ -68,7 +68,7 @@ main = do
       dump = dumpAST args
       trans = transformLabels args
     in
-    if dump == True
-    then if trans == True then dumpit input
-                          else dumpitRaw input
+    if dump
+    then if trans then dumpit input
+                  else dumpitRaw input
     else runit input
