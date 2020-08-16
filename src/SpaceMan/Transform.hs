@@ -6,18 +6,18 @@ import SpaceMan.AbstractSyntaxTree
 
 eightPackToInt :: String -> Char
 eightPackToInt str = chr value
-  where step c (i,n) = ((i+1), n + (2^i) * (if (c == 's') then 0 else 1))
+  where step c (i,n) = (i+1, n + (2^i) * (if c == 's' then 0 else 1))
         (_,value) = foldr step (0,0) str
 
 split8 :: String -> [String]-> [String]
 split8 [] acc = acc
-split8 xs acc = split8 (drop 8 xs) $ acc ++ [(take 8 xs)]
+split8 xs acc = split8 (drop 8 xs) $ acc ++ [take 8 xs]
 
 makeAsciiName :: Label -> Label
 makeAsciiName l = map eightPackToInt $ split8 l [[]]
 
 asciiName :: Label -> Label
-asciiName l = if (length l `mod` 8 == 0)
+asciiName l = if length l `mod` 8 == 0
               then filter isPrint $ makeAsciiName l
               else l
 

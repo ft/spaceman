@@ -19,7 +19,7 @@ import SpaceMan.Machine.Types
 
 -- | Push: Put new elements on top of the stack.
 psh :: [Value] -> WhitespaceMachine -> WhitespaceMachine
-psh lst m = m { stack = lst ++ (stack m) }
+psh lst m = m { stack = lst ++ stack m }
 
 -- | Drop: Remove the top-most element on the stack
 drp :: Integer -> WhitespaceMachine -> WhitespaceMachine
@@ -31,7 +31,7 @@ peek n m = take (fromInteger n) $ stack m
 
 -- | Ref: Reference item on stack
 ref :: Integer -> WhitespaceMachine -> Value
-ref i m = (stack m) !! fromInteger i
+ref i m = stack m !! fromInteger i
 
 -- Heap Memory Instructions
 
@@ -48,7 +48,7 @@ lda a m = heapFetch (heap m) a
 
 -- | CallStackPush: Put new element onto the top of the call-stack
 csp :: WhitespaceMachine -> WhitespaceMachine
-csp m = m { callStack = (pc m):(callStack m) }
+csp m = m { callStack = pc m:callStack m }
 
 -- | CallStackDrop: Remove top-most element from call-stack
 csd :: WhitespaceMachine -> WhitespaceMachine
@@ -63,7 +63,7 @@ csa m = head $ callStack m
 
 -- | ProcessCounterNext: Return the next regular process counter value
 pcn :: WhitespaceMachine -> Address
-pcn m = (pc m) + 1
+pcn m = pc m + 1
 
 -- | ProcessCounterLoad: Load an arbitrary address into process counter
 pcl :: Address -> WhitespaceMachine -> WhitespaceMachine
@@ -75,7 +75,7 @@ pci m = pcl (pcn m) m
 
 -- | LoadInstruction: Load instruction from program memory based on PC
 ldi :: WhitespaceMachine -> WhitespaceExpression
-ldi m = (program m) !! (fromInteger $ pc m)
+ldi m = program m !! fromInteger (pc m)
 
 
 -- Jump Table Instructions

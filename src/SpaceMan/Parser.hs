@@ -38,7 +38,7 @@ whitespaceOperator op = do
   discardOthers
 
 char2bit :: Char -> IntegerBit
-char2bit c = if (c == WS.space)
+char2bit c = if c == WS.space
              then Zero
              else One
 
@@ -49,7 +49,7 @@ bitToInteger One = 1
 listToInteger'' :: Integer -> Int -> IntegerString -> Integer
 listToInteger'' acc _ [] = acc
 listToInteger'' acc bit (x:xs) =
-  listToInteger'' (acc + ((bitToInteger x) * 2 ^ (bit - 1))) (bit - 1) xs
+  listToInteger'' (acc + (bitToInteger x * 2 ^ (bit - 1))) (bit - 1) xs
 
 listToInteger' :: IntegerString -> Integer
 listToInteger' xs = listToInteger'' 0 (length xs) xs
@@ -70,7 +70,7 @@ whitespaceInteger :: Parser Integer
 whitespaceInteger = listToInteger <$> spaceTabString
 
 bit2char :: IntegerBit -> Char
-bit2char c = if (c == Zero)
+bit2char c = if c == Zero
              then 's'
              else 'T'
 

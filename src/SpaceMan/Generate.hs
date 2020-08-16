@@ -16,19 +16,19 @@ bits n s = bits next $ bit : s
 genInt :: Integer -> String
 genInt n = sign : bits an []
   where an = abs n
-        sign = if (n < 0) then WS.tabular else WS.space
+        sign = if n < 0 then WS.tabular else WS.space
         size = bits an
 
 letters :: String -> String -> String
 letters [] s = s
 letters (x:xs) s = letters xs $ s ++ [ letter ]
-  where letter = if (isLower x) then WS.space else WS.tabular
+  where letter = if isLower x then WS.space else WS.tabular
 
 genTag :: String -> String
 genTag t = letters t []
 
 stackGen :: StackOperation -> String
-stackGen (Push n) = [ WS.space ] ++ (genInt n) ++ [ WS.linefeed ]
+stackGen (Push n) = [ WS.space ] ++ genInt n ++ [ WS.linefeed ]
 stackGen Duplicate = [ WS.linefeed, WS.space ]
 stackGen Swap = [ WS.linefeed, WS.tabular ]
 stackGen Drop = [ WS.linefeed, WS.linefeed ]
@@ -68,7 +68,7 @@ op2string (Arithmetic a)        = [ WS.tabular, WS.space ]    ++ mathGen a
 
 gen :: WhitespaceProgram -> String -> String
 gen [] s = s
-gen (op:ps) s = gen ps $ s ++ (op2string op)
+gen (op:ps) s = gen ps $ s ++ op2string op
 
 generate :: WhitespaceProgram -> String
 generate p = gen p ""
