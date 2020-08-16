@@ -10,10 +10,10 @@ whitespaceAlphabet :: String
 whitespaceAlphabet = [ linefeed, space, tabular ]
 
 fromWhitespaceAlphabet :: Char -> Bool
-fromWhitespaceAlphabet c = elem c whitespaceAlphabet
+fromWhitespaceAlphabet c = c `elem` whitespaceAlphabet
 
 integerAlphabet :: String
 integerAlphabet = [ space, tabular ]
 
 fromIntegerAlphabet :: Char -> Bool
-fromIntegerAlphabet c = elem c integerAlphabet
+fromIntegerAlphabet c = c `elem` integerAlphabet
