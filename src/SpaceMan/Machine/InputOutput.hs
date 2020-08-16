@@ -10,7 +10,7 @@ import SpaceMan.Machine.Types
 eval :: WhitespaceMachine -> InputOutputOperation ->  IO WhitespaceMachine
 
 eval m PrintCharacter = do
-  putChar (chr (fromInteger (head (stack m))))
+  putChar $ chr $ fromInteger $ head $ stack m
   hFlush stdout
   return $ pci $ drp 1 m
 
