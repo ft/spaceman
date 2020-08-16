@@ -2,7 +2,7 @@ import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Generate
 
 main :: IO ()
-main = do
+main =
   putStr $ generate [
     -- Load Hello World! into the heap.
     StackManipulation (Push 0),
