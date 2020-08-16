@@ -64,8 +64,8 @@ config = cmdArgsMode $ SpacemanArguments {
 main :: IO ()
 main = do
   args <- cmdArgsRun config
-  let dump = dumpAST args
-      input = fileName args
+  let input = fileName args
+      dump = dumpAST args
       trans = transformLabels args
     in
     if dump == True
