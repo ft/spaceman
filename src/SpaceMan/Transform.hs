@@ -4,12 +4,12 @@ import Data.Char
 
 import SpaceMan.AbstractSyntaxTree
 
-eightPackToInt :: [Char] -> Char
+eightPackToInt :: String -> Char
 eightPackToInt str = chr value
   where step c (i,n) = ((i+1), n + (2^i) * (if (c == 's') then 0 else 1))
         (_,value) = foldr step (0,0) str
 
-split8 :: [Char] -> [[Char]]-> [[Char]]
+split8 :: String -> [String]-> [String]
 split8 [] acc = acc
 split8 xs acc = split8 (drop 8 xs) $ acc ++ [(take 8 xs)]
 

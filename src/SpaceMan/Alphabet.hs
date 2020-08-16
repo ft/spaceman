@@ -6,13 +6,13 @@ linefeed = Data.Char.chr 10
 space    = Data.Char.chr 32
 tabular  = Data.Char.chr  9
 
-whitespaceAlphabet :: [Char]
+whitespaceAlphabet :: String
 whitespaceAlphabet = [ linefeed, space, tabular ]
 
 fromWhitespaceAlphabet :: Char -> Bool
 fromWhitespaceAlphabet c = elem c whitespaceAlphabet
 
-integerAlphabet :: [Char]
+integerAlphabet :: String
 integerAlphabet = [ space, tabular ]
 
 fromIntegerAlphabet :: Char -> Bool

@@ -98,7 +98,7 @@ slideIntegerParser = do
   imp [ WS.linefeed ] <?> "<linefeed> [end-of-integer]"
   return $ Slide ns
 
-tag :: [Char] -> Parser Label
+tag :: String -> Parser Label
 tag xs = do
   void $ imp xs
   l <- whitespaceLabel
@@ -106,13 +106,13 @@ tag xs = do
   return l
 
 -- Instruction Manipulation Parameter
-imp :: [Char] -> Parser ()
+imp :: String -> Parser ()
 imp [] = return ()
 imp (x:xs) = do
   whitespaceOperator x
   imp xs
 
-operation :: [Char] -> a -> Parser a
+operation :: String -> a -> Parser a
 operation xs op = do
   void $ imp xs
   return op
