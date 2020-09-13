@@ -28,6 +28,7 @@ executable spaceman
                        SpaceMan.Machine.Tools,
                        SpaceMan.Machine.Types,
                        SpaceMan.Parser,
+                       SpaceMan.Program,
                        SpaceMan.Transform
   build-depends:       base >= 4.12,
                        cmdargs >= 0.10.20,
