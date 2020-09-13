@@ -21,14 +21,14 @@ readParseProcess p f = do
   content <- readFile f
   process p $ parse whitespaceRead f content
 
+runit :: String -> IO ()
+runit = readParseProcess (run . load)
+
 dumpProgram :: Process
 dumpProgram [] = return ()
 dumpProgram (p:ps) = do
   print p
   dumpProgram ps
-
-runit :: String -> IO ()
-runit = readParseProcess (run . load)
 
 dumpit :: String -> IO ()
 dumpit = readParseProcess (dumpProgram . labelNames)
