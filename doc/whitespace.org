@@ -7,10 +7,10 @@
 This file is a conversion of Edwin Brady's original page on white space. All
 comments beyond this section are his.
 
-I just added the ~Slide~ and ~Copy~ primitives, that seem have been added to a
-later version of whitespace. I couldn't find the original reference, but
-example programs on the web use them and other implementations implement them.
-So there they are. -ft
+I just added the ~Slide~ and ~Copy~ stack manipulation instructions, that seem
+have been added to a later version of whitespace. I couldn't find the original
+reference, but example programs on the web use them and other implementations
+implement them. So there they are. -ft
 
 
 * Overview of the Language
