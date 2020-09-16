@@ -25,8 +25,23 @@ readParseProcess p f = do
 runit :: String -> IO ()
 runit = readParseProcess (run . load)
 
+pp :: String -> IO ()
+pp s = putStr $ "  " ++ s
+
+ppfc :: String -> String -> IO ()
+ppfc op tag = pp $ "FlowControl $ " ++ op ++ " $ whitespaceLabel " ++ human
+  where human = show $ asciiName tag
+
+pretty :: Printer
+pretty (FlowControl (Tag tag))            = ppfc "Tag" tag
+pretty (FlowControl (Call tag))           = ppfc "Call" tag
+pretty (FlowControl (Jump tag))           = ppfc "Jump" tag
+pretty (FlowControl (JumpIfZero tag))     = ppfc "JumpIfZero" tag
+pretty (FlowControl (JumpIfNegative tag)) = ppfc "JumpIfNegative" tag
+pretty e = indented e
+
 indented :: Printer
-indented e = putStr $ "  " ++ show e
+indented e = pp $ show e
 
 header, footer :: IO ()
 
@@ -57,11 +72,11 @@ dumpProgram print _ _ []     = return ()
 dumpProgram print i m (p:ps) = do printExpr p print i m
                                   dumpProgram print (i+1) m ps
 
-dumpProgram' :: Process
-dumpProgram' p = dumpProgram indented 1 (toInteger $ length p) p
+dumpProgram' :: Printer -> Process
+dumpProgram' print p = dumpProgram print 1 (toInteger $ length p) p
 
 dumpit :: String -> IO ()
-dumpit p = readParseProcess (dumpProgram' . labelNames) p
+dumpit p = readParseProcess (dumpProgram' pretty) p
 
 dumpitRaw :: String -> IO ()
-dumpitRaw p = readParseProcess dumpProgram' p
+dumpitRaw p = readParseProcess (dumpProgram' indented) p

@@ -1,4 +1,4 @@
-module SpaceMan.Transform (labelNames) where
+module SpaceMan.Transform (labelNames, asciiName) where
 
 import Data.Char
 
