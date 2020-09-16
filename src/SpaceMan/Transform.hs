@@ -16,9 +16,13 @@ split8 xs acc = split8 (drop 8 xs) $ acc ++ [take 8 xs]
 makeAsciiName :: Label -> Label
 makeAsciiName l = map eightPackToInt $ split8 l [[]]
 
+replaceUnprintable :: Char -> Char
+replaceUnprintable c | isPrint c = c
+replaceUnprintable _ | otherwise = '_'
+
 asciiName :: Label -> Label
 asciiName l = if length l `mod` 8 == 0
-              then filter isPrint $ makeAsciiName l
+              then map replaceUnprintable $ makeAsciiName l
               else l
 
 transformName :: WhitespaceExpression -> WhitespaceExpression
