@@ -57,7 +57,7 @@ mathGen Add      = [ WS.space,   WS.space    ]
 mathGen Subtract = [ WS.space,   WS.tabular  ]
 mathGen Multiply = [ WS.space,   WS.linefeed ]
 mathGen Divide   = [ WS.tabular, WS.space    ]
-mathGen Modulo   = [ WS.tabular, WS.space    ]
+mathGen Modulo   = [ WS.tabular, WS.tabular  ]
 
 op2string :: WhitespaceExpression -> String
 op2string (StackManipulation s) = [ WS.space ]                ++ stackGen s
