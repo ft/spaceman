@@ -1,4 +1,4 @@
-module SpaceMan.Generate (generate) where
+module SpaceMan.Generate (generate, whitespaceLabel) where
 
 import Data.Bits
 import Data.Char
@@ -72,3 +72,20 @@ gen (op:ps) s = gen ps $ s ++ op2string op
 
 generate :: WhitespaceProgram -> String
 generate p = gen p ""
+
+c2b :: Int -> IntegerString -> Int -> IntegerString
+c2b _ acc 256 = acc
+c2b c acc s = c2b c (bit:acc) $ shiftL s 1
+  where bit = if (s .&. c) == 0 then Zero else One
+
+b2w :: IntegerBit -> Char
+b2w One  = 'T'
+b2w Zero = 's'
+
+c2word :: Char -> String
+c2word c = map b2w word
+  where word = c2b (ord c) [] 1
+
+whitespaceLabel :: String -> String
+whitespaceLabel "" = ""
+whitespaceLabel (x:xs) = c2word x ++ whitespaceLabel xs
