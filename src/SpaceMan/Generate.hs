@@ -32,6 +32,8 @@ stackGen (Push n) = [ WS.space ] ++ genInt n ++ [ WS.linefeed ]
 stackGen Duplicate = [ WS.linefeed, WS.space ]
 stackGen Swap = [ WS.linefeed, WS.tabular ]
 stackGen Drop = [ WS.linefeed, WS.linefeed ]
+stackGen (Copy n)  = [ WS.tabular,  WS.space    ] ++ genInt n ++ [ WS.linefeed ]
+stackGen (Slide n) = [ WS.tabular,  WS.linefeed ] ++ genInt n ++ [ WS.linefeed ]
 
 heapGen :: HeapOperation -> String
 heapGen Store = [ WS.space ]
