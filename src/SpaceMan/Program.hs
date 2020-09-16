@@ -57,7 +57,6 @@ dumpProgram print _ _ []     = return ()
 dumpProgram print i m (p:ps) = do printExpr p print i m
                                   dumpProgram print (i+1) m ps
 
-
 dumpProgram' :: Process
 dumpProgram' p = dumpProgram indented 1 (toInteger $ length p) p
 
