@@ -28,24 +28,24 @@ genTag :: String -> String
 genTag t = letters t []
 
 stackGen :: StackOperation -> String
-stackGen (Push n) = [ WS.space ] ++ genInt n ++ [ WS.linefeed ]
-stackGen Duplicate = [ WS.linefeed, WS.space ]
-stackGen Swap = [ WS.linefeed, WS.tabular ]
-stackGen Drop = [ WS.linefeed, WS.linefeed ]
+stackGen (Push n)  = [ WS.space ]                 ++ genInt n ++ [ WS.linefeed ]
 stackGen (Copy n)  = [ WS.tabular,  WS.space    ] ++ genInt n ++ [ WS.linefeed ]
 stackGen (Slide n) = [ WS.tabular,  WS.linefeed ] ++ genInt n ++ [ WS.linefeed ]
+stackGen Duplicate = [ WS.linefeed, WS.space    ]
+stackGen Swap      = [ WS.linefeed, WS.tabular  ]
+stackGen Drop      = [ WS.linefeed, WS.linefeed ]
 
 heapGen :: HeapOperation -> String
 heapGen Store = [ WS.space ]
 heapGen Fetch = [ WS.tabular ]
 
 flowGen :: FlowControlOperation -> String
-flowGen (Tag tag)            = [ WS.space,   WS.space ]    ++ genTag tag ++ [ WS.linefeed ]
-flowGen (Call tag)           = [ WS.space,   WS.tabular ]  ++ genTag tag ++ [ WS.linefeed ]
-flowGen (Jump tag)           = [ WS.space,   WS.linefeed ] ++ genTag tag ++ [ WS.linefeed ]
-flowGen (JumpIfZero tag)     = [ WS.tabular, WS.space ]    ++ genTag tag ++ [ WS.linefeed ]
-flowGen (JumpIfNegative tag) = [ WS.tabular, WS.tabular ]  ++ genTag tag ++ [ WS.linefeed ]
-flowGen Return               = [ WS.tabular, WS.linefeed ]
+flowGen (Tag tag)            = [ WS.space,   WS.space     ] ++ genTag tag ++ [ WS.linefeed ]
+flowGen (Call tag)           = [ WS.space,   WS.tabular   ] ++ genTag tag ++ [ WS.linefeed ]
+flowGen (Jump tag)           = [ WS.space,   WS.linefeed  ] ++ genTag tag ++ [ WS.linefeed ]
+flowGen (JumpIfZero tag)     = [ WS.tabular, WS.space     ] ++ genTag tag ++ [ WS.linefeed ]
+flowGen (JumpIfNegative tag) = [ WS.tabular, WS.tabular   ] ++ genTag tag ++ [ WS.linefeed ]
+flowGen Return               = [ WS.tabular, WS.linefeed  ]
 flowGen ExitFromProgram      = [ WS.linefeed, WS.linefeed ]
 
 ioGen :: InputOutputOperation -> String
@@ -62,11 +62,11 @@ mathGen Divide   = [ WS.tabular, WS.space    ]
 mathGen Modulo   = [ WS.tabular, WS.tabular  ]
 
 op2string :: WhitespaceExpression -> String
-op2string (StackManipulation s) = [ WS.space ]                ++ stackGen s
-op2string (HeapAccess h)        = [ WS.tabular, WS.tabular]   ++ heapGen h
-op2string (FlowControl f)       = [ WS.linefeed ]             ++ flowGen f
+op2string (StackManipulation s) = [ WS.space                ] ++ stackGen s
+op2string (HeapAccess h)        = [ WS.tabular, WS.tabular  ] ++ heapGen h
+op2string (FlowControl f)       = [ WS.linefeed             ] ++ flowGen f
 op2string (InputOutput io)      = [ WS.tabular, WS.linefeed ] ++ ioGen io
-op2string (Arithmetic a)        = [ WS.tabular, WS.space ]    ++ mathGen a
+op2string (Arithmetic a)        = [ WS.tabular, WS.space    ] ++ mathGen a
 
 gen :: WhitespaceProgram -> String -> String
 gen [] s = s
