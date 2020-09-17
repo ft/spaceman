@@ -32,9 +32,9 @@ stackParser = do
 
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
-  (      try $ imp       WS.artithmetic)
+  (      try $ imp       WS.arithmetic)
   (      try $ operation WS.add       Add)
-    <|> (try $ operation WS.substract Subtract)
+    <|> (try $ operation WS.subtract  Subtract)
     <|> (try $ operation WS.multiply  Multiply)
     <|> (try $ operation WS.divide    Divide)
     <|> (try $ operation WS.modulo    Modulo)

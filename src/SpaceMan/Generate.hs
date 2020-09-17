@@ -30,7 +30,7 @@ genTag t = letters t []
 
 op2string :: WhitespaceExpression -> String
 op2string (StackManipulation s) = EN.stack       ++ stackGen s
-op2string (Arithmetic a)        = EN.artithmetic ++ mathGen a
+op2string (Arithmetic a)        = EN.arithmetic  ++ mathGen a
 op2string (HeapAccess h)        = EN.heap        ++ heapGen h
 op2string (FlowControl f)       = EN.flowControl ++ flowGen f
 op2string (InputOutput io)      = EN.io          ++ ioGen io
@@ -45,7 +45,7 @@ stackGen (Slide n) = EN.slide ++ genInt n ++ [ WS.linefeed ]
 
 mathGen :: ArithmeticOperation -> String
 mathGen Add      = EN.add
-mathGen Subtract = EN.substract
+mathGen Subtract = EN.subtract
 mathGen Multiply = EN.multiply
 mathGen Divide   = EN.divide
 mathGen Modulo   = EN.modulo

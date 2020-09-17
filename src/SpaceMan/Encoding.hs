@@ -4,7 +4,7 @@ import SpaceMan.Alphabet
 
 -- Instruction Manipulation Prefixes
 stack       = [ space              ]
-artithmetic = [ tabular, space     ]
+arithmetic  = [ tabular, space     ]
 heap        = [ tabular, tabular   ]
 flowControl = [ linefeed           ]
 io          = [ tabular, linefeed  ]
@@ -19,7 +19,7 @@ slide       = [ tabular,  linefeed ]
 
 -- Arithmetic Encoding
 add         = [ space,   space     ]
-substract   = [ space,   tabular   ]
+subtract    = [ space,   tabular   ]
 multiply    = [ space,   linefeed  ]
 divide      = [ tabular, space     ]
 modulo      = [ tabular, tabular   ]
