@@ -1,0 +1,9 @@
+==================================
+ User-visible changes in SpaceMan
+==================================
+
+* scratch → v1.0.0 (released 2020-09-17):
+
+  - First release of the spaceman implementation of whitespace.
+
+  Diff-stat:
