@@ -7,3 +7,44 @@
   - First release of the spaceman implementation of whitespace.
 
   Diff-stat:
+
+    .gitignore                          |   15 +
+    CHANGES                             |    9 +
+    LICENCE                             |   24 +
+    README                              |   60 ++
+    Setup.hs                            |    2 +
+    doc/slides/Makefile                 |   55 +
+    doc/slides/filters/simg.py          |  177 ++++
+    doc/slides/graphics/labels.svg      |  308 ++++++
+    doc/slides/graphics/numbers.svg     |  411 ++++++++
+    doc/slides/slides.mdwn              |  236 +++++
+    doc/slides/title.tex                |   17 +
+    doc/slides/whitespace.tex           |  173 +++
+    doc/whitespace.org                  |  155 +++
+    examples/count.ws                   |   24 +
+    examples/fact.ws                    |  137 +++
+    examples/fibonacci.ws               |   54 +
+    examples/hello-world.hs             |   81 ++
+    examples/hello-world.ws             |   61 ++
+    examples/sudoku.txt                 |    9 +
+    examples/sudoku.ws                  | 1512 +++++++++++++++++++++++++++
+    spaceman.cabal                      |   40 +
+    src/SpaceMan.hs                     |   43 +
+    src/SpaceMan/AbstractSyntaxTree.hs  |   61 ++
+    src/SpaceMan/Alphabet.hs            |   19 +
+    src/SpaceMan/Encoding.hs            |   44 +
+    src/SpaceMan/Generate.hs            |  100 ++
+    src/SpaceMan/Interpreter.hs         |   12 +
+    src/SpaceMan/Language.hs            |   65 ++
+    src/SpaceMan/Machine.hs             |   24 +
+    src/SpaceMan/Machine/Arithmetic.hs  |   18 +
+    src/SpaceMan/Machine/FlowControl.hs |   24 +
+    src/SpaceMan/Machine/InputOutput.hs |   30 +
+    src/SpaceMan/Machine/MemoryHeap.hs  |   10 +
+    src/SpaceMan/Machine/MemoryStack.hs |   13 +
+    src/SpaceMan/Machine/Tools.hs       |   85 ++
+    src/SpaceMan/Machine/Types.hs       |   73 ++
+    src/SpaceMan/Parser.hs              |  102 ++
+    src/SpaceMan/Program.hs             |   88 ++
+    src/SpaceMan/Transform.hs           |   30 +
+    39 files changed, 4401 insertions(+)
