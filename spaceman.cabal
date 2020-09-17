@@ -17,6 +17,7 @@ executable spaceman
   main-is:             SpaceMan.hs
   other-modules:       SpaceMan.AbstractSyntaxTree,
                        SpaceMan.Alphabet,
+                       SpaceMan.Encoding,
                        SpaceMan.Generate,
                        SpaceMan.Interpreter,
                        SpaceMan.Language,

@@ -3,53 +3,53 @@ module SpaceMan.Language (whitespaceParser, whitespaceRead) where
 import Control.Monad
 import Text.Megaparsec
 
-import qualified SpaceMan.Alphabet as WS
+import qualified SpaceMan.Encoding as WS
 import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Parser
 
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
-  (      try $ imp       [ WS.tabular, WS.space ])
-  (      try $ operation [ WS.space,   WS.space    ] Add)
-    <|> (try $ operation [ WS.space,   WS.tabular  ] Subtract)
-    <|> (try $ operation [ WS.space,   WS.linefeed ] Multiply)
-    <|> (try $ operation [ WS.tabular, WS.space    ] Divide)
-    <|> (try $ operation [ WS.tabular, WS.tabular  ] Modulo)
+  (      try $ imp       WS.artithmetic)
+  (      try $ operation WS.add       Add)
+    <|> (try $ operation WS.substract Subtract)
+    <|> (try $ operation WS.multiply  Multiply)
+    <|> (try $ operation WS.divide    Divide)
+    <|> (try $ operation WS.modulo    Modulo)
 
 ioParser :: Parser InputOutputOperation
 ioParser = do
-  (      try $ imp       [ WS.tabular, WS.linefeed ])
-  (      try $ operation [ WS.space,   WS.space    ] PrintCharacter)
-    <|> (try $ operation [ WS.space,   WS.tabular  ] PrintNumber)
-    <|> (try $ operation [ WS.tabular, WS.space    ] ReadCharacter)
-    <|> (try $ operation [ WS.tabular, WS.tabular  ] ReadNumber)
+  (      try $ imp       WS.io)
+  (      try $ operation WS.printChar PrintCharacter)
+    <|> (try $ operation WS.printNum  PrintNumber)
+    <|> (try $ operation WS.readChar  ReadCharacter)
+    <|> (try $ operation WS.readNum   ReadNumber)
 
 heapParser :: Parser HeapOperation
 heapParser = do
-  (      try $ imp       [ WS.tabular, WS.tabular ])
-  (      try $ operation [ WS.space   ] Store)
-    <|> (try $ operation [ WS.tabular ] Fetch)
+  (      try $ imp       WS.heap)
+  (      try $ operation WS.store Store)
+    <|> (try $ operation WS.fetch Fetch)
 
 stackParser :: Parser StackOperation
 stackParser = do
-  (      try $ imp [ WS.space ])
-  (      try $ Push  <$> number [ WS.space                 ])
-    <|> (try $ Copy  <$> number [ WS.tabular, WS.space     ])
-    <|> (try $ Slide <$> number [ WS.tabular, WS.linefeed  ])
-    <|> (try $ operation        [ WS.linefeed, WS.space    ] Duplicate)
-    <|> (try $ operation        [ WS.linefeed, WS.tabular  ] Swap)
-    <|> (try $ operation        [ WS.linefeed, WS.linefeed ] Drop)
+  (      try $ imp WS.stack)
+  (      try $ Push  <$> number WS.push)
+    <|> (try $ Copy  <$> number WS.copy)
+    <|> (try $ Slide <$> number WS.slide)
+    <|> (try $ operation        WS.duplicate Duplicate)
+    <|> (try $ operation        WS.swap      Swap)
+    <|> (try $ operation        WS.drop      Drop)
 
 flowControlParser :: Parser FlowControlOperation
 flowControlParser = do
-  (      try $ imp [ WS.linefeed ])
-  (      try $ Tag            <$> tag [ WS.space,    WS.space    ])
-    <|> (try $ Call           <$> tag [ WS.space,    WS.tabular  ])
-    <|> (try $ Jump           <$> tag [ WS.space,    WS.linefeed ])
-    <|> (try $ JumpIfZero     <$> tag [ WS.tabular,  WS.space    ])
-    <|> (try $ JumpIfNegative <$> tag [ WS.tabular,  WS.tabular  ])
-    <|> (try $ operation              [ WS.tabular,  WS.linefeed ] Return)
-    <|> (try $ operation              [ WS.linefeed, WS.linefeed ] ExitFromProgram)
+  (      try $ imp WS.flowControl)
+  (      try $ Tag            <$> tag WS.tag)
+    <|> (try $ Call           <$> tag WS.call)
+    <|> (try $ Jump           <$> tag WS.jump)
+    <|> (try $ JumpIfZero     <$> tag WS.jumpIfZero)
+    <|> (try $ JumpIfNegative <$> tag WS.jumpIfNeg)
+    <|> (try $ operation              WS.callReturn Return)
+    <|> (try $ operation              WS.exit       ExitFromProgram)
 
 whitespaceParser :: Parser WhitespaceExpression
 whitespaceParser =
