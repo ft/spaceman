@@ -28,6 +28,12 @@ letters (x:xs) s = letters xs $ s ++ [ letter ]
 genTag :: String -> String
 genTag t = letters t []
 
+numbered :: Integer -> String
+numbered n = genInt n ++ [ WS.linefeed ]
+
+tagged :: String -> String
+tagged t = genTag t ++ [ WS.linefeed ]
+
 op2string :: WhitespaceExpression -> String
 op2string (StackManipulation s) = EN.stack       ++ stackGen s
 op2string (Arithmetic a)        = EN.arithmetic  ++ mathGen a
@@ -36,12 +42,12 @@ op2string (FlowControl f)       = EN.flowControl ++ flowGen f
 op2string (InputOutput io)      = EN.io          ++ ioGen io
 
 stackGen :: StackOperation -> String
-stackGen (Push n)  = EN.push  ++ genInt n ++ [ WS.linefeed ]
+stackGen (Push n)  = EN.push  ++ numbered n
 stackGen Duplicate = EN.duplicate
 stackGen Swap      = EN.swap
 stackGen Drop      = EN.drop
-stackGen (Copy n)  = EN.copy  ++ genInt n ++ [ WS.linefeed ]
-stackGen (Slide n) = EN.slide ++ genInt n ++ [ WS.linefeed ]
+stackGen (Copy n)  = EN.copy  ++ numbered n
+stackGen (Slide n) = EN.slide ++ numbered n
 
 mathGen :: ArithmeticOperation -> String
 mathGen Add      = EN.add
@@ -55,11 +61,11 @@ heapGen Store = EN.store
 heapGen Fetch = EN.fetch
 
 flowGen :: FlowControlOperation -> String
-flowGen (Tag tag)            = EN.tag        ++ genTag tag ++ [ WS.linefeed ]
-flowGen (Call tag)           = EN.call       ++ genTag tag ++ [ WS.linefeed ]
-flowGen (Jump tag)           = EN.jump       ++ genTag tag ++ [ WS.linefeed ]
-flowGen (JumpIfZero tag)     = EN.jumpIfZero ++ genTag tag ++ [ WS.linefeed ]
-flowGen (JumpIfNegative tag) = EN.jumpIfNeg  ++ genTag tag ++ [ WS.linefeed ]
+flowGen (Tag tag)            = EN.tag        ++ tagged tag
+flowGen (Call tag)           = EN.call       ++ tagged tag
+flowGen (Jump tag)           = EN.jump       ++ tagged tag
+flowGen (JumpIfZero tag)     = EN.jumpIfZero ++ tagged tag
+flowGen (JumpIfNegative tag) = EN.jumpIfNeg  ++ tagged tag
 flowGen Return               = EN.callReturn
 flowGen ExitFromProgram      = EN.exit
 
