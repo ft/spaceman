@@ -5,11 +5,9 @@ module SpaceMan.Parser (Parser, ParserError,
                         whitespaceInteger,
                         whitespaceLabel,
                         whitespaceOperator,
-                        pushIntegerParser,
-                        copyIntegerParser,
-                        slideIntegerParser,
                         tag,
                         imp,
+                        number,
                         operation)
 where
 
@@ -77,26 +75,12 @@ bit2char c = if c == Zero
 whitespaceLabel :: Parser Label
 whitespaceLabel = map bit2char <$> spaceTabString
 
-pushIntegerParser :: Parser StackOperation
-pushIntegerParser = do
-  imp [ WS.space ] <?> "<space> [push: start-of-integer]"
+number :: String -> Parser Integer
+number pat = do
+  imp pat <?> "[int op: start-of-integer]"
   ns <- whitespaceInteger
-  imp [ WS.linefeed ] <?> "<linefeed> [end-of-integer]"
-  return $ Push ns
-
-copyIntegerParser :: Parser StackOperation
-copyIntegerParser = do
-  imp [ WS.tabular, WS.space ] <?> "<space> [copy: start-of-integer]"
-  ns <- whitespaceInteger
-  imp [ WS.linefeed ] <?> "<linefeed> [end-of-integer]"
-  return $ Copy ns
-
-slideIntegerParser :: Parser StackOperation
-slideIntegerParser = do
-  imp [ WS.tabular, WS.linefeed ] <?> "<space> [slide: start-of-integer]"
-  ns <- whitespaceInteger
-  imp [ WS.linefeed ] <?> "<linefeed> [end-of-integer]"
-  return $ Slide ns
+  imp [ WS.linefeed ] <?> "[int <linefeed>: end-of-integer]"
+  return ns
 
 tag :: String -> Parser Label
 tag xs = do

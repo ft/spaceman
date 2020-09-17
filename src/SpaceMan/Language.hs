@@ -32,13 +32,13 @@ heapParser = do
 
 stackParser :: Parser StackOperation
 stackParser = do
-  (      try $ imp       [ WS.space ])
-  (      try $ pushIntegerParser)
-    <|> (try $ copyIntegerParser)
-    <|> (try $ slideIntegerParser)
-    <|> (try $ operation [ WS.linefeed, WS.space    ] Duplicate)
-    <|> (try $ operation [ WS.linefeed, WS.tabular  ] Swap)
-    <|> (try $ operation [ WS.linefeed, WS.linefeed ] Drop)
+  (      try $ imp [ WS.space ])
+  (      try $ Push  <$> number [ WS.space                 ])
+    <|> (try $ Copy  <$> number [ WS.tabular, WS.space     ])
+    <|> (try $ Slide <$> number [ WS.tabular, WS.linefeed  ])
+    <|> (try $ operation        [ WS.linefeed, WS.space    ] Duplicate)
+    <|> (try $ operation        [ WS.linefeed, WS.tabular  ] Swap)
+    <|> (try $ operation        [ WS.linefeed, WS.linefeed ] Drop)
 
 flowControlParser :: Parser FlowControlOperation
 flowControlParser = do
