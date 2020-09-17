@@ -1,45 +1,50 @@
+import Data.Char
+
 import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Generate
+
+char :: Char -> Integer
+char = toInteger . ord
 
 main :: IO ()
 main =
   putStr $ generate [
-    -- Load Hello World! into the heap.
+    -- Load "Hello World!" onto the heap.
     StackManipulation (Push 0),
-    StackManipulation (Push 72),    -- H
+    StackManipulation $ Push $ char 'H',
     HeapAccess Store,
     StackManipulation (Push 1),
-    StackManipulation (Push 101),   -- e
+    StackManipulation $ Push $ char 'e',
     HeapAccess Store,
     StackManipulation (Push 2),
-    StackManipulation (Push 108),   -- l
+    StackManipulation $ Push $ char 'l',
     HeapAccess Store,
     StackManipulation (Push 3),
-    StackManipulation (Push 108),   -- l
+    StackManipulation $ Push $ char 'l',
     HeapAccess Store,
     StackManipulation (Push 4),
-    StackManipulation (Push 111),   -- o
+    StackManipulation $ Push $ char 'o',
     HeapAccess Store,
     StackManipulation (Push 5),
-    StackManipulation (Push 32),    -- Space
+    StackManipulation $ Push $ char ' ',
     HeapAccess Store,
     StackManipulation (Push 6),
-    StackManipulation (Push 87),    -- W
+    StackManipulation $ Push $ char 'W',
     HeapAccess Store,
     StackManipulation (Push 7),
-    StackManipulation (Push 111),   -- o
+    StackManipulation $ Push $ char 'o',
     HeapAccess Store,
     StackManipulation (Push 8),
-    StackManipulation (Push 114),   -- r
+    StackManipulation $ Push $ char 'r',
     HeapAccess Store,
     StackManipulation (Push 9),
-    StackManipulation (Push 108),   -- l
+    StackManipulation $ Push $ char 'l',
     HeapAccess Store,
     StackManipulation (Push 10),
-    StackManipulation (Push 100),   -- d
+    StackManipulation $ Push $ char 'd',
     HeapAccess Store,
     StackManipulation (Push 11),
-    StackManipulation (Push 33),    -- !
+    StackManipulation $ Push $ char '!',
     HeapAccess Store,
     StackManipulation (Push 12),
     StackManipulation (Push 0),     -- End of String
@@ -47,28 +52,28 @@ main =
 
     StackManipulation (Push 0),     -- Loop Variable := 0
 
-    FlowControl (Call "sss"),       -- Call PrintString Function
-    FlowControl (Call "TTT"),       -- Call PrintEndline Function
+    FlowControl $ Call $ label "print-string",
+    FlowControl $ Call $ label "print-end-of-line",
     FlowControl ExitFromProgram,
 
 
-    FlowControl (Tag "sss"),        -- PrintString Function
+    FlowControl $ Tag $ label "print-string",
     StackManipulation Duplicate,
     HeapAccess Fetch,
     StackManipulation Duplicate,
-    FlowControl (JumpIfZero "TsT"), -- If End of String
+    FlowControl $ JumpIfZero $ label "label:end-of-string-found",
     InputOutput PrintCharacter,
     StackManipulation (Push 1),
     Arithmetic Add,                 -- Loop Variable + 1
-    FlowControl (Jump "sss"),       -- TailRecurse
+    FlowControl $ Jump $ label "print-string",
 
-    FlowControl (Tag "TsT"),        -- Found End of String in Heap
+    FlowControl $ Tag $ label "label:end-of-string-found",
     StackManipulation Drop,         -- Drop End of String Marker
     StackManipulation Drop,         -- Drop Address Counter
     FlowControl Return,
 
 
-    FlowControl (Tag "TTT"),        -- PrintEndline Function
+    FlowControl $ Tag $ label "print-end-of-line",
     StackManipulation (Push 10),
     StackManipulation (Push 13),
     InputOutput PrintCharacter,
