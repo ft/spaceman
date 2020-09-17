@@ -1,4 +1,4 @@
-module SpaceMan.Generate (generate, whitespaceLabel) where
+module SpaceMan.Generate (generate, label) where
 
 import Data.Bits
 import Data.Char
@@ -95,6 +95,6 @@ c2word :: Char -> String
 c2word c = map b2w word
   where word = c2b (ord c) [] 1
 
-whitespaceLabel :: String -> String
-whitespaceLabel "" = ""
-whitespaceLabel (x:xs) = c2word x ++ whitespaceLabel xs
+label :: String -> String
+label "" = ""
+label (x:xs) = c2word x ++ label xs

@@ -32,7 +32,7 @@ human :: Label -> Label
 human l = show $ asciiName l
 
 ppfc' :: Label -> Transformed Label -> IO ()
-ppfc' op (Human tag)   = pp $ "FlowControl $ " ++ op ++ " $ whitespaceLabel " ++ show tag
+ppfc' op (Human tag)   = pp $ "FlowControl $ " ++ op ++ " $ label " ++ show tag
 ppfc' op (Machine tag) = pp $ "FlowControl $ " ++ op ++ " " ++ show tag
 
 ppfc :: Label -> Label -> IO ()
