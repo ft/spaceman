@@ -1,8 +1,12 @@
-module SpaceMan.Transform (labelNames, asciiName) where
+module SpaceMan.Transform (asciiName, Transformed(..)) where
 
 import Data.Char
 
 import SpaceMan.AbstractSyntaxTree
+
+data Transformed a = Human a
+                   | Machine a
+  deriving (Show, Eq)
 
 eightPackToInt :: String -> Char
 eightPackToInt str = chr value
@@ -20,18 +24,7 @@ replaceUnprintable :: Char -> Char
 replaceUnprintable c | isPrint c = c
 replaceUnprintable _ | otherwise = '_'
 
-asciiName :: Label -> Label
+asciiName :: Label -> Transformed Label
 asciiName l = if length l `mod` 8 == 0
-              then map replaceUnprintable $ makeAsciiName l
-              else l
-
-transformName :: WhitespaceExpression -> WhitespaceExpression
-transformName (FlowControl (Tag tag))            = FlowControl $ Tag            $ asciiName tag
-transformName (FlowControl (Call tag))           = FlowControl $ Call           $ asciiName tag
-transformName (FlowControl (Jump tag))           = FlowControl $ Jump           $ asciiName tag
-transformName (FlowControl (JumpIfZero tag))     = FlowControl $ JumpIfZero     $ asciiName tag
-transformName (FlowControl (JumpIfNegative tag)) = FlowControl $ JumpIfNegative $ asciiName tag
-transformName e = e
-
-labelNames :: WhitespaceProgram -> WhitespaceProgram
-labelNames = map transformName
+              then Human $ map replaceUnprintable $ makeAsciiName l
+              else Machine l
