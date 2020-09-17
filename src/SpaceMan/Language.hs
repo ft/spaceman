@@ -7,6 +7,29 @@ import qualified SpaceMan.Encoding as WS
 import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Parser
 
+whitespaceRead :: Parser [WhitespaceExpression]
+whitespaceRead = do
+  discardOthers
+  many whitespaceParser
+
+whitespaceParser :: Parser WhitespaceExpression
+whitespaceParser =
+  (    StackManipulation  <$> stackParser)
+  <|> (Arithmetic         <$> arithmeticParser)
+  <|> (HeapAccess         <$> heapParser)
+  <|> (FlowControl        <$> flowControlParser)
+  <|> (InputOutput        <$> ioParser)
+
+stackParser :: Parser StackOperation
+stackParser = do
+  (      try $ imp WS.stack)
+  (      try $ Push  <$> number WS.push)
+    <|> (try $ operation        WS.duplicate Duplicate)
+    <|> (try $ operation        WS.swap      Swap)
+    <|> (try $ operation        WS.drop      Drop)
+    <|> (try $ Copy  <$> number WS.copy)
+    <|> (try $ Slide <$> number WS.slide)
+
 arithmeticParser :: Parser ArithmeticOperation
 arithmeticParser = do
   (      try $ imp       WS.artithmetic)
@@ -16,29 +39,11 @@ arithmeticParser = do
     <|> (try $ operation WS.divide    Divide)
     <|> (try $ operation WS.modulo    Modulo)
 
-ioParser :: Parser InputOutputOperation
-ioParser = do
-  (      try $ imp       WS.io)
-  (      try $ operation WS.printChar PrintCharacter)
-    <|> (try $ operation WS.printNum  PrintNumber)
-    <|> (try $ operation WS.readChar  ReadCharacter)
-    <|> (try $ operation WS.readNum   ReadNumber)
-
 heapParser :: Parser HeapOperation
 heapParser = do
   (      try $ imp       WS.heap)
   (      try $ operation WS.store Store)
     <|> (try $ operation WS.fetch Fetch)
-
-stackParser :: Parser StackOperation
-stackParser = do
-  (      try $ imp WS.stack)
-  (      try $ Push  <$> number WS.push)
-    <|> (try $ Copy  <$> number WS.copy)
-    <|> (try $ Slide <$> number WS.slide)
-    <|> (try $ operation        WS.duplicate Duplicate)
-    <|> (try $ operation        WS.swap      Swap)
-    <|> (try $ operation        WS.drop      Drop)
 
 flowControlParser :: Parser FlowControlOperation
 flowControlParser = do
@@ -51,15 +56,10 @@ flowControlParser = do
     <|> (try $ operation              WS.callReturn Return)
     <|> (try $ operation              WS.exit       ExitFromProgram)
 
-whitespaceParser :: Parser WhitespaceExpression
-whitespaceParser =
-  (    StackManipulation  <$> stackParser)
-  <|> (Arithmetic         <$> arithmeticParser)
-  <|> (HeapAccess         <$> heapParser)
-  <|> (FlowControl        <$> flowControlParser)
-  <|> (InputOutput        <$> ioParser)
-
-whitespaceRead :: Parser [WhitespaceExpression]
-whitespaceRead = do
-  discardOthers
-  many whitespaceParser
+ioParser :: Parser InputOutputOperation
+ioParser = do
+  (      try $ imp       WS.io)
+  (      try $ operation WS.printChar PrintCharacter)
+    <|> (try $ operation WS.printNum  PrintNumber)
+    <|> (try $ operation WS.readChar  ReadCharacter)
+    <|> (try $ operation WS.readNum   ReadNumber)
