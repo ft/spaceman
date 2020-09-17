@@ -28,13 +28,27 @@ letters (x:xs) s = letters xs $ s ++ [ letter ]
 genTag :: String -> String
 genTag t = letters t []
 
+op2string :: WhitespaceExpression -> String
+op2string (StackManipulation s) = EN.stack       ++ stackGen s
+op2string (Arithmetic a)        = EN.artithmetic ++ mathGen a
+op2string (HeapAccess h)        = EN.heap        ++ heapGen h
+op2string (FlowControl f)       = EN.flowControl ++ flowGen f
+op2string (InputOutput io)      = EN.io          ++ ioGen io
+
 stackGen :: StackOperation -> String
 stackGen (Push n)  = EN.push  ++ genInt n ++ [ WS.linefeed ]
-stackGen (Copy n)  = EN.copy  ++ genInt n ++ [ WS.linefeed ]
-stackGen (Slide n) = EN.slide ++ genInt n ++ [ WS.linefeed ]
 stackGen Duplicate = EN.duplicate
 stackGen Swap      = EN.swap
 stackGen Drop      = EN.drop
+stackGen (Copy n)  = EN.copy  ++ genInt n ++ [ WS.linefeed ]
+stackGen (Slide n) = EN.slide ++ genInt n ++ [ WS.linefeed ]
+
+mathGen :: ArithmeticOperation -> String
+mathGen Add      = EN.add
+mathGen Subtract = EN.substract
+mathGen Multiply = EN.multiply
+mathGen Divide   = EN.divide
+mathGen Modulo   = EN.modulo
 
 heapGen :: HeapOperation -> String
 heapGen Store = EN.store
@@ -54,20 +68,6 @@ ioGen PrintCharacter = EN.printChar
 ioGen PrintNumber    = EN.printNum
 ioGen ReadCharacter  = EN.readChar
 ioGen ReadNumber     = EN.readNum
-
-mathGen :: ArithmeticOperation -> String
-mathGen Add      = EN.add
-mathGen Subtract = EN.substract
-mathGen Multiply = EN.multiply
-mathGen Divide   = EN.divide
-mathGen Modulo   = EN.modulo
-
-op2string :: WhitespaceExpression -> String
-op2string (StackManipulation s) = EN.stack       ++ stackGen s
-op2string (HeapAccess h)        = EN.heap        ++ heapGen h
-op2string (FlowControl f)       = EN.flowControl ++ flowGen f
-op2string (InputOutput io)      = EN.io          ++ ioGen io
-op2string (Arithmetic a)        = EN.artithmetic ++ mathGen a
 
 gen :: WhitespaceProgram -> String -> String
 gen [] s = s
