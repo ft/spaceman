@@ -2,7 +2,7 @@ module SpaceMan.Encoding where
 
 import SpaceMan.Alphabet
 
--- Instruction Manipulation Prefixes
+-- Instruction Manipulation Parameters
 stack       = [ space              ]
 arithmetic  = [ tabular, space     ]
 heap        = [ tabular, tabular   ]
