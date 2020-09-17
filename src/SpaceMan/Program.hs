@@ -76,7 +76,7 @@ dumpProgram' :: Printer -> Process
 dumpProgram' print p = dumpProgram print 1 (toInteger $ length p) p
 
 dumpit :: String -> IO ()
-dumpit p = readParseProcess (dumpProgram' pretty) p
+dumpit = readParseProcess $ dumpProgram' pretty
 
 dumpitRaw :: String -> IO ()
-dumpitRaw p = readParseProcess (dumpProgram' indented) p
+dumpitRaw = readParseProcess $ dumpProgram' indented
