@@ -3,6 +3,8 @@
 
 import System.Console.CmdArgs
 import SpaceMan.Program
+import Paths_spaceman (version)
+import Data.Version (showVersion)
 
 data SpacemanArguments = SpacemanArguments
   { dumpAST         :: Bool,
@@ -22,7 +24,8 @@ config = cmdArgsMode $ SpacemanArguments {
   fileName = def
            &= typ "SourceFile"
            &= argPos 0
-  } &= summary "SpaceMan v0.1.0 - A Whitespace Implementation"
+  } &= summary ("SpaceMan v" ++ showVersion version
+                             ++ " - A Whitespace Implementation")
     &= help    "Execute whitespace source code"
     &= program "spaceman"
     &= helpArg [explicit, name "h", name "help"]

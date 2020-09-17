@@ -32,6 +32,7 @@ executable spaceman
                        SpaceMan.Parser,
                        SpaceMan.Program,
                        SpaceMan.Transform
+                       Paths_spaceman
   build-depends:       base >= 4.12,
                        cmdargs >= 0.10.20,
                        megaparsec >= 8.0.0
