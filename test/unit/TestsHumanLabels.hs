@@ -21,17 +21,14 @@ spoo :: [String]
 poo  =   "sTTTssss" ++ "sTTsTTTT" ++ "sTTsTTTT"
 spoo = [ "sTTTssss",   "sTTsTTTT",   "sTTsTTTT" ]
 
-gives :: (Show a, Show b) => a -> b -> String
-gives a b = show a ++ " => " ++ show b
-
-makeLabel :: String -> String -> String
-makeLabel a b = "makeAsciiName " ++ show a ++ " => " ++ show b
+gives :: (Show a, Show b) => String -> a -> b -> String
+gives f a b = f ++ " " ++ show a ++ " => " ++ show b
 
 testsHumanLabels = hspec $ do
   describe "HumanReadableLabels.Generic" $ do
-    it (makeLabel poo "poo") $ makeAsciiName poo `shouldBe` "poo"
-    it (poo `gives` spoo)    $ split8 poo []     `shouldBe` spoo
-    it (poo `gives` "poo")   $ makeAsciiName poo `shouldBe` "poo"
+    it (gives "makeAsciiName"  poo "poo") $ makeAsciiName poo `shouldBe` "poo"
+    it (gives         "label" "poo" poo)  $ label "poo"       `shouldBe` poo
+    it (gives        "split8"  poo spoo)  $ split8 poo []     `shouldBe` spoo
   describe "HumanReadableLabels.Inverse" $ do
     checkHumanLabelInverse ""
     checkHumanLabelInverse "a"
