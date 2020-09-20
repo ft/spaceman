@@ -2,6 +2,17 @@
  User-visible changes in SpaceMan
 ==================================
 
+* v1.0.1 → v1.0.2 (released 2020-09-20):
+
+  Bugfixes:
+
+  - Fix instructions in README (6a8cf1d)
+
+  Diff-stat:
+
+    README | 6 +++---
+    1 file changed, 3 insertions(+), 3 deletions(-)
+
 * v1.0.0 → v1.0.1 (released 2020-09-20):
 
   Bugfixes:
