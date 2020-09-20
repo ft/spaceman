@@ -13,6 +13,10 @@ stability:           experimental
 build-type:          Simple
 extra-source-files:  CHANGES
 
+source-repository head
+  type: git
+  location: https://gitlab.com/ft/spaceman.git
+
 executable spaceman
   main-is:             SpaceMan.hs
   other-modules:       SpaceMan.AbstractSyntaxTree,
@@ -33,7 +37,7 @@ executable spaceman
                        SpaceMan.Program,
                        SpaceMan.Transform
                        Paths_spaceman
-  build-depends:       base >= 4.12,
+  build-depends:       base >= 4.12 && < 5,
                        cmdargs >= 0.10.20,
                        megaparsec >= 8.0.0
   hs-source-dirs:      src
