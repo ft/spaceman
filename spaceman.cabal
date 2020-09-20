@@ -65,3 +65,14 @@ test-suite unit-tests
       hspec,
       spaceman
   default-language: Haskell2010
+
+test-suite property-tests
+  type: exitcode-stdio-1.0
+  main-is: SpaceManProperties.hs
+  hs-source-dirs:
+      test/property
+  build-depends:
+      base >= 4.12 && < 5,
+      QuickCheck,
+      spaceman
+  default-language: Haskell2010
