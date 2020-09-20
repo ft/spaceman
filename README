@@ -10,9 +10,9 @@ Quickstart:
 
     % cabal configure
     % cabal build
-    % cabal run spaceman-exe -- ./examples/hello-world.ws
+    % cabal run spaceman -- ./examples/hello-world.ws
     Hello World!
-    % cabal run spaceman-exe -- ./examples/count.ws
+    % cabal run spaceman -- ./examples/count.ws
     1
     2
     3
@@ -23,7 +23,7 @@ Quickstart:
     8
     9
     10
-    % cabal run spaceman-exe -- ./examples/sudoku.ws
+    % cabal run spaceman -- ./examples/sudoku.ws
     Sudoku Solver - written in Whitespace!
 
             Instructions:

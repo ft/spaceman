@@ -1,6 +1,6 @@
 cabal-version:       >=1.10
 name:                spaceman
-version:             1.0.2
+version:             1.0.3
 synopsis:            Run Whitespace Programs
 description:         Whitespace Implementation
 license:             BSD2
@@ -43,7 +43,7 @@ library
        megaparsec >= 8.0.0
   default-language: Haskell2010
 
-executable spaceman-exe
+executable spaceman
   main-is: SpaceMan.hs
   other-modules:
        Paths_spaceman
