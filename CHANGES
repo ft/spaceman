@@ -2,6 +2,26 @@
  User-visible changes in SpaceMan
 ==================================
 
+* v1.0.0 → v1.0.1 (released 2020-09-20):
+
+  Bugfixes:
+
+  - Fix generating human-readable labels (8ffa35c97)
+
+  Internals:
+
+  - Add manual unit tests using hspec.
+  - Add property-based tests using quickcheck.
+
+  Diff-stat:
+
+    {src => prg}/SpaceMan.hs            |  0
+    spaceman.cabal                      | 88 +++++++++++++++++++++--------
+    src/SpaceMan/Transform.hs           | 13 +++--
+    test/property/SpaceManProperties.hs | 47 +++++++++++++++
+    test/unit/SpaceManTests.hs          | 40 +++++++++++++
+    5 files changed, 158 insertions(+), 30 deletions(-)
+
 * scratch → v1.0.0 (released 2020-09-17):
 
   - First release of the spaceman implementation of whitespace.
