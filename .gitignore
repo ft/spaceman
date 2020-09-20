@@ -3,6 +3,7 @@
 *.lock
 cabal.project.local
 dist-newstyle/
+dist/
 doc/slides/graphics/*.pdf
 doc/slides/slides.tex
 doc/slides/*.pdf
