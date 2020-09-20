@@ -8,13 +8,19 @@ import PropertiesHumanLabel
 tests =
   [("For printables, makeAsciiName is inverse of label", humanLabelInverse)]
 
-defaultNumberOfTests :: [String] -> Int
-defaultNumberOfTests [s] = read s
-defaultNumberOfTests _ = 1000
+defaultNumberOfTests :: Int
+defaultNumberOfTests = 1000
+
+defaultSize :: Int
+defaultSize = 100
+
+howManyTests :: [String] -> Int
+howManyTests [s] = read s
+howManyTests _ = defaultNumberOfTests
 
 testArgs :: Int -> Args
 testArgs n = stdArgs { maxSuccess = n,
-                       maxSize = 100 }
+                       maxSize = defaultSize }
 
 qc :: Testable p => Args -> p -> IO Bool
 qc args test = do
@@ -28,7 +34,7 @@ run n (title, prop) = printf "%-50s: " title >> qc (testArgs n) prop
 main :: IO ()
 main = do
   arg <- getArgs
-  let n = defaultNumberOfTests arg
+  let n = howManyTests arg
     in do
     failn <- length . filter not <$> mapM (run n) tests
     unless (failn == 0) $ error $ show failn ++ " test(s) failed"
