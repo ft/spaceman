@@ -58,6 +58,9 @@ executable spaceman
 test-suite unit-tests
   type: exitcode-stdio-1.0
   main-is: SpaceManTests.hs
+  other-modules:
+       TestsAlphabet
+       TestsHumanLabels
   hs-source-dirs:
       test/unit
   build-depends:
