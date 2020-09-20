@@ -2,6 +2,19 @@
  User-visible changes in SpaceMan
 ==================================
 
+* v1.0.2 → v1.0.3 (released 2020-09-20):
+
+  Bugfixes:
+
+  - Fix cabal executable definition, so the program is
+    called ‘spaceman’. (a67e187f73)
+
+  Diff-stat:
+
+    README         | 6 +++---
+    spaceman.cabal | 4 ++--
+    2 files changed, 5 insertions(+), 5 deletions(-)
+
 * v1.0.1 → v1.0.2 (released 2020-09-20):
 
   Bugfixes:
