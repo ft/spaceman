@@ -25,7 +25,7 @@ gives :: (Show a, Show b) => a -> b -> String
 gives a b = show a ++ " => " ++ show b
 
 makeLabel :: String -> String -> String
-makeLabel a b = ("makeAsciiName " ++ show a ++ " => " ++ show b)
+makeLabel a b = "makeAsciiName " ++ show a ++ " => " ++ show b
 
 testsHumanLabels = hspec $ do
   describe "HumanReadableLabels.Generic" $ do
