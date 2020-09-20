@@ -1,4 +1,7 @@
-module SpaceMan.Transform (asciiName, Transformed(..)) where
+module SpaceMan.Transform (asciiName,
+                           makeAsciiName,
+                           split8,
+                           Transformed(..)) where
 
 import Data.Char
 
@@ -18,7 +21,7 @@ split8 [] acc = acc
 split8 xs acc = split8 (drop 8 xs) $ acc ++ [take 8 xs]
 
 makeAsciiName :: Label -> Label
-makeAsciiName l = map eightPackToInt $ split8 l [[]]
+makeAsciiName l = map eightPackToInt $ split8 l []
 
 replaceUnprintable :: Char -> Char
 replaceUnprintable c | isPrint c = c

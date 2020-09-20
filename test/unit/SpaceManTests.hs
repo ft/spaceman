@@ -1,6 +1,8 @@
 import Test.Hspec
 
 import SpaceMan.Alphabet
+import SpaceMan.Generate
+import SpaceMan.Transform
 
 isInWS :: String -> String
 isInWS ch = ch ++ "is in the alphabet"
@@ -9,6 +11,9 @@ isInInt :: Bool -> String -> String
 isInInt isit ch = ch ++ "is "
                      ++ if isit then "" else " NOT"
                      ++ " in the alphabet"
+
+labelToHuman s =
+  it (s ++ " converts back and forth") $ ((asciiName . label) s) `shouldBe` Human s
 
 main :: IO ()
 main = hspec $ do
@@ -24,3 +29,12 @@ main = hspec $ do
     it (isInInt True "<space>") $ (fromIntegerAlphabet ' ')     `shouldBe` True
     it (isInInt False "<lf>")   $ (fromIntegerAlphabet '\n')    `shouldBe` False
     it (isInInt True "<tab>")   $ (fromIntegerAlphabet '\t')    `shouldBe` True
+  describe "HumanReadableLabels" $ do
+    it "poo → sTTTssss sTTsTTTT sTTsTTTT"
+      $ (split8 "sTTTsssssTTsTTTTsTTsTTTT" [])
+      `shouldBe` ["sTTTssss", "sTTsTTTT", "sTTsTTTT"]
+    it "sTTTssss sTTsTTTT sTTsTTTT → poo"
+      $ (makeAsciiName "sTTTsssssTTsTTTTsTTsTTTT") `shouldBe` "poo"
+    labelToHuman ""
+    labelToHuman "a"
+    labelToHuman "print-hello"
