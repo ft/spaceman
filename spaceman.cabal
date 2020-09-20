@@ -17,28 +17,51 @@ source-repository head
   type: git
   location: https://gitlab.com/ft/spaceman.git
 
-executable spaceman
-  main-is:             SpaceMan.hs
-  other-modules:       SpaceMan.AbstractSyntaxTree,
-                       SpaceMan.Alphabet,
-                       SpaceMan.Encoding,
-                       SpaceMan.Generate,
-                       SpaceMan.Interpreter,
-                       SpaceMan.Language,
-                       SpaceMan.Machine,
-                       SpaceMan.Machine.Arithmetic,
-                       SpaceMan.Machine.FlowControl,
-                       SpaceMan.Machine.InputOutput,
-                       SpaceMan.Machine.MemoryHeap,
-                       SpaceMan.Machine.MemoryStack,
-                       SpaceMan.Machine.Tools,
-                       SpaceMan.Machine.Types,
-                       SpaceMan.Parser,
-                       SpaceMan.Program,
-                       SpaceMan.Transform
-                       Paths_spaceman
-  build-depends:       base >= 4.12 && < 5,
-                       cmdargs >= 0.10.20,
-                       megaparsec >= 8.0.0
-  hs-source-dirs:      src
-  default-language:    Haskell2010
+library
+  exposed-modules:
+      SpaceMan.AbstractSyntaxTree,
+      SpaceMan.Alphabet,
+      SpaceMan.Encoding,
+      SpaceMan.Generate,
+      SpaceMan.Interpreter,
+      SpaceMan.Language,
+      SpaceMan.Machine,
+      SpaceMan.Machine.Arithmetic,
+      SpaceMan.Machine.FlowControl,
+      SpaceMan.Machine.InputOutput,
+      SpaceMan.Machine.MemoryHeap,
+      SpaceMan.Machine.MemoryStack,
+      SpaceMan.Machine.Tools,
+      SpaceMan.Machine.Types,
+      SpaceMan.Parser,
+      SpaceMan.Program,
+      SpaceMan.Transform
+  hs-source-dirs:
+      src
+  build-depends:
+       base >= 4.12 && < 5,
+       megaparsec >= 8.0.0
+  default-language: Haskell2010
+
+executable spaceman-exe
+  main-is: SpaceMan.hs
+  other-modules:
+       Paths_spaceman
+  build-depends:
+       base >= 4.12 && < 5,
+       cmdargs >= 0.10.20,
+       spaceman
+  hs-source-dirs:
+      prg
+  default-language: Haskell2010
+
+test-suite unit-tests
+  type: exitcode-stdio-1.0
+  main-is: SpaceManTests.hs
+  hs-source-dirs:
+      test/unit
+  build-depends:
+      base >= 4.12 && < 5,
+      hspec,
+      spaceman
+  default-language: Haskell2010
