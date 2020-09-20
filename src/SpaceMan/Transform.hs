@@ -20,14 +20,14 @@ split8 :: String -> [String]-> [String]
 split8 [] acc = acc
 split8 xs acc = split8 (drop 8 xs) $ acc ++ [take 8 xs]
 
-makeAsciiName :: Label -> Label
-makeAsciiName l = map eightPackToInt $ split8 l []
-
 replaceUnprintable :: Char -> Char
 replaceUnprintable c | isPrint c = c
 replaceUnprintable _ | otherwise = '_'
 
+makeAsciiName :: Label -> Label
+makeAsciiName l = map (replaceUnprintable . eightPackToInt) $ split8 l []
+
 asciiName :: Label -> Transformed Label
 asciiName l = if length l `mod` 8 == 0
-              then Human $ map replaceUnprintable $ makeAsciiName l
+              then Human $ makeAsciiName l
               else Machine l
