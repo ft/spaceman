@@ -73,6 +73,7 @@ test-suite property-tests
   type: exitcode-stdio-1.0
   main-is: SpaceManProperties.hs
   other-modules:
+       PropertiesAlphabet
        PropertiesHumanLabel
   hs-source-dirs:
       test/property

@@ -4,9 +4,13 @@ import Test.QuickCheck
 import Text.Printf (printf)
 
 import PropertiesHumanLabel
+import PropertiesAlphabet
 
+tests :: [(String, Property)]
 tests =
-  [("For printables, makeAsciiName is inverse of label", humanLabelInverse)]
+  [("For printables, makeAsciiName is inverse of label", property humanLabelInverse),
+   ("fromIntegerAlphabet filters correctly",             property nonIntegerCharacters),
+   ("fromWhitespaceAlphabet filters Comments",           property nonWhitespaceCharacters)]
 
 defaultNumberOfTests :: Int
 defaultNumberOfTests = 1000
