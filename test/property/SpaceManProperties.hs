@@ -29,7 +29,9 @@ qc args test = do
             _          -> return False
 
 run :: Testable p => Int -> (String, p) -> IO Bool
-run n (title, prop) = printf "%-50s: " title >> qc (testArgs n) prop
+run n (title, prop) = printf format title >> qc (testArgs n) prop
+  where titleColumWidth = 50
+        format = "%-" ++ show titleColumWidth ++ "s: "
 
 main :: IO ()
 main = do
