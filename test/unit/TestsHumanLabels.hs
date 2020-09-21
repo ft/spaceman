@@ -10,11 +10,6 @@ checkHumanLabelInverse s = it title $ f s `shouldBe` Human s
         title = "(asciiName . label) " ++ ps ++ " => " ++ ps
         f = asciiName . label
 
-t :: Bool -> String -> String -> String
-t is ab ch = ch ++ " is"
-                ++ (if is then "" else " NOT")
-                ++ " in the " ++ ab ++ " alphabet"
-
 poo :: String
 spoo :: [String]
 
