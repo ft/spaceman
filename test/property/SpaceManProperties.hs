@@ -1,7 +1,7 @@
-import Control.Monad
-import System.Environment
+import Control.Monad (unless)
+import System.Environment (getArgs)
 import Test.QuickCheck
-import Text.Printf
+import Text.Printf (printf)
 
 import PropertiesHumanLabel
 
