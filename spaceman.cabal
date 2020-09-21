@@ -61,11 +61,13 @@ test-suite unit-tests
   other-modules:
        TestsAlphabet
        TestsHumanLabels
+       TestsLanguage
   hs-source-dirs:
       test/unit
   build-depends:
       base >= 4.12 && < 5,
       hspec,
+      megaparsec >= 8.0.0,
       spaceman
   default-language: Haskell2010
 
