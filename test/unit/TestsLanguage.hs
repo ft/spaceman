@@ -12,6 +12,10 @@ tl :: String -> WhitespaceExpression -> SpecWith ()
 tl input op = it (show op ++ " parses")
             $ (MP.parse whitespaceParser "" input) `shouldBe` (Right op)
 
+comb :: String -> WhitespaceProgram -> SpecWith ()
+comb input ops = it "Program [...] parses"
+               $ (MP.parse whitespaceRead "" input) `shouldBe` (Right ops)
+
 nstr :: String
 nstr = [ space,
          -- 1111011 := 123
@@ -58,3 +62,20 @@ testsLanguage = hspec $ do
     tl (EN.io ++ EN.printNum)         (InputOutput PrintNumber)
     tl (EN.io ++ EN.readChar)         (InputOutput ReadCharacter)
     tl (EN.io ++ EN.readNum)          (InputOutput ReadNumber)
+  describe "Language.Toplevel.Combination" $ do
+    comb (EN.stack ++ EN.push ++ nstr
+          ++ EN.stack ++ EN.duplicate
+          ++ EN.stack ++ EN.duplicate
+          ++ EN.stack ++ EN.duplicate
+          ++ EN.arithmetic ++ EN.add
+          ++ EN.arithmetic ++ EN.multiply
+          ++ EN.arithmetic ++ EN.subtract
+          ++ fc ++ EN.exit)
+         [StackManipulation $ Push inum,
+          StackManipulation Duplicate,
+          StackManipulation Duplicate,
+          StackManipulation Duplicate,
+          Arithmetic Add,
+          Arithmetic Multiply,
+          Arithmetic Subtract,
+          FlowControl ExitFromProgram]
