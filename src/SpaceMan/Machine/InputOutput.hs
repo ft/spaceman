@@ -10,21 +10,25 @@ import SpaceMan.Machine.Types
 eval :: WhitespaceMachine -> InputOutputOperation ->  IO WhitespaceMachine
 
 eval m PrintCharacter = do
-  putChar $ chr $ fromInteger $ head $ stack m
+  let [h] = peek 1 m
+    in putChar $ chr $ fromInteger h
   hFlush stdout
   return $ pci $ drp 1 m
 
 eval m PrintNumber = do
-  putStr $ show $ head $ stack m
+  let [h] = peek 1 m
+    in putStr $ show h
   hFlush stdout
   return $ pci $ drp 1 m
 
 eval m ReadCharacter = do
   raw <- getChar
-  let c = toInteger $ ord raw in
-    return $ pci $ sto a c $ drp 1 m    where [a] = peek 1 m
+  let c = toInteger $ ord raw
+      [a] = peek 1 m
+    in return $ pci $ sto a c $ drp 1 m
 
 eval m ReadNumber = do
   raw <- getLine
-  let n = read $ raw :: Value in
-    return $ pci $ sto a n $ drp 1 m    where [a] = peek 1 m
+  let n = read $ raw :: Value
+      [a] = peek 1 m
+    in return $ pci $ sto a n $ drp 1 m
