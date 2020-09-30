@@ -7,7 +7,7 @@ import qualified SpaceMan.Encoding as EN
 import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Parser
 
-whitespaceRead :: Parser [WhitespaceExpression]
+whitespaceRead :: Parser WhitespaceProgram
 whitespaceRead = do
   discardOthers
   many whitespaceParser
