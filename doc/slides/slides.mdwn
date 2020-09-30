@@ -37,13 +37,18 @@ There is one type of data in Whitespace:
 
 Similarly, labels are strings like that as well:
 
+- Spaces and Tabs of arbitrary length, terminated by a linefeed.
+- The spec assigns no special meaning to these strings.
 - There is just one name space, and labels have to be unique.
 - So you can't use the same label in two `Tag` calls.
 
-\vspace{1.5cm}
+## How does it work?
 
-- Some code uses multiples of eight as the bits in the labels…
-- …treat the datum as an unsigned integer…
+- Some code treats these labels like unsigned numbers though…
+- …where multiples of eight such bits are grouped into an eight bit integer…
+
+\vspace{1.3cm}
+
 - …then they map that to ASCII: The example here would be `0x55` → `U`
 - That is not at all required: `[SPC][LF]` is a perfectly fine label.
 
