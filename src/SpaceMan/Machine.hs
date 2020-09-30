@@ -1,4 +1,4 @@
-module SpaceMan.Machine (machineStep, runMachine) where
+module SpaceMan.Machine (runMachine) where
 
 import SpaceMan.AbstractSyntaxTree
 import SpaceMan.Machine.Tools
