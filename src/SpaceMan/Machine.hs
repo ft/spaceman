@@ -18,7 +18,5 @@ machineStep m (FlowControl       e) = FlowControl.eval m e
 machineStep m (InputOutput       e) = InOut.eval       m e
 
 runMachine :: WhitespaceMachine -> IO ()
-runMachine m = do
-  nextState <- machineStep m instruction
-  runMachine nextState
+runMachine m = runMachine =<< machineStep m instruction
   where instruction = ldi m
