@@ -28,22 +28,22 @@ runit = readParseProcess (run . load)
 pp :: String -> IO ()
 pp s = putStr $ "  " ++ s
 
-human :: Label -> Label
+human :: String -> String
 human l = show $ asciiName l
 
-ppfc' :: Label -> Transformed Label -> IO ()
+ppfc' :: String -> Transformed String -> IO ()
 ppfc' op (Human tag)   = pp $ "FlowControl $ " ++ op ++ " $ label " ++ show tag
 ppfc' op (Machine tag) = pp $ "FlowControl $ " ++ op ++ " " ++ show tag
 
-ppfc :: Label -> Label -> IO ()
+ppfc :: String -> String -> IO ()
 ppfc op tag = ppfc' op $ asciiName tag
 
 pretty :: Printer
-pretty (FlowControl (Tag tag))            = ppfc "Tag"  tag
-pretty (FlowControl (Call tag))           = ppfc "Call" tag
-pretty (FlowControl (Jump tag))           = ppfc "Jump" tag
-pretty (FlowControl (JumpIfZero tag))     = ppfc "JumpIfZero" tag
-pretty (FlowControl (JumpIfNegative tag)) = ppfc "JumpIfNegative" tag
+pretty (FlowControl (Tag            (Name tag))) = ppfc "Tag"  tag
+pretty (FlowControl (Call           (Name tag))) = ppfc "Call" tag
+pretty (FlowControl (Jump           (Name tag))) = ppfc "Jump" tag
+pretty (FlowControl (JumpIfZero     (Name tag))) = ppfc "JumpIfZero" tag
+pretty (FlowControl (JumpIfNegative (Name tag))) = ppfc "JumpIfNegative" tag
 pretty e = indented e
 
 indented :: Printer

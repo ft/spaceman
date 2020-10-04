@@ -50,11 +50,11 @@ testsLanguage = hspec $ do
     tl (EN.heap ++ EN.store)          (HeapAccess Store)
     tl (EN.heap ++ EN.fetch)          (HeapAccess Fetch)
   describe "Language.Toplevel.FlowControl" $ do
-    tl (fc ++ EN.tag ++ tstr)         (FlowControl $ Tag "sTTTTsTT")
-    tl (fc ++ EN.call ++ tstr)        (FlowControl $ Call "sTTTTsTT")
-    tl (fc ++ EN.jump ++ tstr)        (FlowControl $ Jump "sTTTTsTT")
-    tl (fc ++ EN.jumpIfZero ++ tstr)  (FlowControl $ JumpIfZero "sTTTTsTT")
-    tl (fc ++ EN.jumpIfNeg ++ tstr)   (FlowControl $ JumpIfNegative "sTTTTsTT")
+    tl (fc ++ EN.tag ++ tstr)         (FlowControl $ Tag $ Name "sTTTTsTT")
+    tl (fc ++ EN.call ++ tstr)        (FlowControl $ Call $ Name "sTTTTsTT")
+    tl (fc ++ EN.jump ++ tstr)        (FlowControl $ Jump $ Name "sTTTTsTT")
+    tl (fc ++ EN.jumpIfZero ++ tstr)  (FlowControl $ JumpIfZero $ Name "sTTTTsTT")
+    tl (fc ++ EN.jumpIfNeg ++ tstr)   (FlowControl $ JumpIfNegative $ Name "sTTTTsTT")
     tl (fc ++ EN.callReturn)          (FlowControl $ Return)
     tl (fc ++ EN.exit)                (FlowControl $ ExitFromProgram)
   describe "Language.Toplevel.InputOutput" $ do

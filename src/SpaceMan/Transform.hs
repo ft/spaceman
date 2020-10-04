@@ -24,10 +24,10 @@ replaceUnprintable :: Char -> Char
 replaceUnprintable c | isPrint c = c
 replaceUnprintable _ | otherwise = '_'
 
-makeAsciiName :: Label -> Label
+makeAsciiName :: String -> String
 makeAsciiName l = map (replaceUnprintable . eightPackToInt) $ split8 l []
 
-asciiName :: Label -> Transformed Label
+asciiName :: String -> Transformed String
 asciiName l = if length l `mod` 8 == 0
               then Human $ makeAsciiName l
               else Machine l

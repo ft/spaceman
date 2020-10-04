@@ -8,7 +8,7 @@ import SpaceMan.Transform
 checkHumanLabelInverse s = it title $ f s `shouldBe` Human s
   where ps = show s
         title = "(asciiName . label) " ++ ps ++ " => " ++ ps
-        f = asciiName . label
+        f = asciiName . label'
 
 poo :: String
 spoo :: [String]
@@ -22,7 +22,7 @@ spoo = [ "sTTTssss",   "sTTsTTTT",   "sTTsTTTT" ]
 testsHumanLabels = hspec $ do
   describe "HumanReadableLabels.Generic" $ do
     it (("makeAsciiName",  poo)  → "poo") $ makeAsciiName poo `shouldBe` "poo"
-    it ((        "label", "poo") → poo)   $ label "poo"       `shouldBe` poo
+    it ((        "label", "poo") → poo)   $ label' "poo"      `shouldBe` poo
     it ((       "split8",  poo)  → spoo)  $ split8 poo []     `shouldBe` spoo
   describe "HumanReadableLabels.Inverse" $ do
     checkHumanLabelInverse ""

@@ -1,4 +1,4 @@
-module SpaceMan.Generate (generate, label) where
+module SpaceMan.Generate (generate, label, label') where
 
 import Data.Bits
 import Data.Char
@@ -61,11 +61,11 @@ heapGen Store = EN.store
 heapGen Fetch = EN.fetch
 
 flowGen :: FlowControlOperation -> String
-flowGen (Tag tag)            = EN.tag        ++ tagged tag
-flowGen (Call tag)           = EN.call       ++ tagged tag
-flowGen (Jump tag)           = EN.jump       ++ tagged tag
-flowGen (JumpIfZero tag)     = EN.jumpIfZero ++ tagged tag
-flowGen (JumpIfNegative tag) = EN.jumpIfNeg  ++ tagged tag
+flowGen (Tag            (Name tag)) = EN.tag        ++ tagged tag
+flowGen (Call           (Name tag)) = EN.call       ++ tagged tag
+flowGen (Jump           (Name tag)) = EN.jump       ++ tagged tag
+flowGen (JumpIfZero     (Name tag)) = EN.jumpIfZero ++ tagged tag
+flowGen (JumpIfNegative (Name tag)) = EN.jumpIfNeg  ++ tagged tag
 flowGen Return               = EN.callReturn
 flowGen ExitFromProgram      = EN.exit
 
@@ -95,6 +95,9 @@ c2word :: Char -> String
 c2word c = map b2w word
   where word = c2b (ord c) [] 1
 
-label :: String -> String
-label "" = ""
-label (x:xs) = c2word x ++ label xs
+label' :: String -> String
+label' "" = ""
+label' (x:xs) = c2word x ++ label' xs
+
+label :: String -> Label
+label s = Name $ label' s

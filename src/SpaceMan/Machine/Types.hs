@@ -10,13 +10,13 @@ import SpaceMan.AbstractSyntaxTree
 
 import Control.Monad
 
-type JumpTable = [(Label, Address)]
+type JumpTable = [(String, Address)]
 
 getLabelAddress :: JumpTable -> Label -> Address
 getLabelAddress [] _ = 0
-getLabelAddress ((tag,address):xs) t =
+getLabelAddress ((tag,address):xs) (Name t) =
   if tag == t then address
-              else getLabelAddress xs t
+              else getLabelAddress xs (Name t)
 
 type Stack = [Integer]
 type Address = Integer
@@ -41,7 +41,7 @@ type StartInfo = (Integer, JumpTable, WhitespaceProgram)
 type MachineStart = Either String StartInfo
 
 extractPure :: StartInfo -> WhitespaceExpression -> MachineStart
-extractPure (idx, jt, ps) (FlowControl (Tag tag)) =
+extractPure (idx, jt, ps) (FlowControl (Tag (Name tag))) =
   if tag `elem` map fst jt
   then Left $ "Label " ++ tag ++ " already defined."
   else Right (idx, jt ++ [ (tag, idx) ], ps)

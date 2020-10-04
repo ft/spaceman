@@ -7,7 +7,7 @@ module SpaceMan.AbstractSyntaxTree (WhitespaceProgram,
                                     ArithmeticOperation(..),
                                     IntegerBit(..),
                                     IntegerString,
-                                    Label) where
+                                    Label(..)) where
 
 data IntegerBit = Zero
                 | One
@@ -15,7 +15,9 @@ data IntegerBit = Zero
 
 type IntegerString = [IntegerBit]
 
-type Label = String
+data Label = Name String
+           | Address Integer
+  deriving (Show, Eq)
 
 data StackOperation = Push Integer
                     | Duplicate

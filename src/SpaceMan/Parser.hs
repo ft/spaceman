@@ -73,7 +73,7 @@ bit2char c = if c == Zero
              else 'T'
 
 whitespaceLabel :: Parser Label
-whitespaceLabel = map bit2char <$> spaceTabString
+whitespaceLabel = Name <$> map bit2char <$> spaceTabString
 
 number :: String -> Parser Integer
 number pat = do

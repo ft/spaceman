@@ -15,4 +15,4 @@ instance Arbitrary HumanLabel where
   arbitrary = HumanLabel <$> listOf humanLabelChar
 
 humanLabelInverse :: HumanLabel -> Bool
-humanLabelInverse (HumanLabel s) = (T.makeAsciiName . G.label) s == s
+humanLabelInverse (HumanLabel s) = (T.makeAsciiName . G.label') s == s
