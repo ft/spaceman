@@ -81,5 +81,5 @@ ldi m = program m !! fromInteger (pc m)
 -- Jump Table Instructions
 
 -- | Label: Returns address of given label
-lbl :: Label -> WhitespaceMachine -> Address
+lbl :: String -> WhitespaceMachine -> Address
 lbl t m = getLabelAddress (jump m) t

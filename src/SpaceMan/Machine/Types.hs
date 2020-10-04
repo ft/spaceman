@@ -1,4 +1,5 @@
 module SpaceMan.Machine.Types (extractJumpTable,
+                               resolveLabels,
                                getLabelAddress,
                                heapFetch,
                                heapStore,
@@ -12,11 +13,11 @@ import Control.Monad
 
 type JumpTable = [(String, Address)]
 
-getLabelAddress :: JumpTable -> Label -> Address
+getLabelAddress :: JumpTable -> String -> Address
 getLabelAddress [] _ = 0
-getLabelAddress ((tag,address):xs) (Name t) =
+getLabelAddress ((tag,address):xs) t =
   if tag == t then address
-              else getLabelAddress xs (Name t)
+              else getLabelAddress xs t
 
 type Stack = [Integer]
 type Address = Integer
@@ -49,6 +50,21 @@ extractPure (idx, jt, ps) p = Right (idx + 1, jt, ps ++ [ p ])
 
 extractJumpTable :: WhitespaceProgram -> MachineStart
 extractJumpTable = foldM extractPure (0,[],[])
+
+resolveLabel :: JumpTable -> WhitespaceExpression -> WhitespaceExpression
+resolveLabel jt (FlowControl (Call (Name l))) =
+  FlowControl $ Call $ Address $ getLabelAddress jt l
+resolveLabel jt (FlowControl (Jump (Name l))) =
+  FlowControl $ Jump $ Address $ getLabelAddress jt l
+resolveLabel jt (FlowControl (JumpIfZero (Name l))) =
+  FlowControl $ JumpIfZero $ Address $ getLabelAddress jt l
+resolveLabel jt (FlowControl (JumpIfNegative (Name l))) =
+  FlowControl $ JumpIfNegative $ Address $ getLabelAddress jt l
+resolveLabel _ op = op
+
+resolveLabels :: MachineStart -> MachineStart
+resolveLabels (Left msg) = Left msg
+resolveLabels (Right (idx,jt,ps)) = Right (idx, jt, map (resolveLabel jt) ps)
 
 data WhitespaceMachine = WhitespaceMachine
   {
