@@ -10,6 +10,8 @@ module SpaceMan.Machine.Types (extractJumpTable,
 import SpaceMan.AbstractSyntaxTree
 
 import Control.Monad
+import Data.Maybe
+import qualified Data.Map.Strict as M
 
 type JumpTable = [(String, Address)]
 
@@ -23,20 +25,16 @@ type Stack = [Integer]
 type Address = Integer
 type Value = Integer
 
-type HeapDatum = (Address, Value)
-type Heap = [HeapDatum]
+type Heap = M.Map Integer Integer
 
 heapStore :: Heap -> Address -> Value -> Heap
-heapStore [] a v = [ (a,v) ]
-heapStore ((addr,value):xs) a v =
-  if addr == a then (a,v):xs
-               else (addr,value) : heapStore xs a v
+heapStore h a k = M.insert a k h
 
 heapFetch :: Heap -> Address -> Value
-heapFetch [] _ = 0
-heapFetch ((addr,value):xs) a =
-  if addr == a then value
-               else heapFetch xs a
+heapFetch h a = if v == Nothing
+                then 0
+                else fromJust v
+  where v = M.lookup a h
 
 type StartInfo = (Integer, JumpTable, WhitespaceProgram)
 type MachineStart = Either String StartInfo
@@ -82,7 +80,7 @@ loadTheMachine (Right (_, jumpTable, reducedProgram)) =
   Right WhitespaceMachine {
     stack = [],
     callStack = [],
-    heap = [],
+    heap = M.fromList [],
     pc = 0,
     jump = jumpTable,
     program = reducedProgram
