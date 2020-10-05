@@ -2,6 +2,45 @@
  User-visible changes in SpaceMan
 ==================================
 
+* v1.0.3 → v1.0.4 (released 2020-10-05):
+
+  Internals:
+
+  - Resolves flow control labels while loading a program into
+    spaceman's virtual machine before running the program.
+  - Replaces naïve heap implementation with Data.Map.
+  - Adds unit tests for selected API
+  - Adds property based tests for some internals
+
+  Diff-stat:
+
+    .gitignore                                    |  1 +
+    doc/slides/slides.mdwn                        | 11 ++-
+    examples/sudoku-simple.txt                    |  9 +++
+    examples/sudoku-tough.txt                     |  9 +++
+    examples/{sudoku.txt => sudoku-wikipedia.txt} |  0
+    spaceman.cabal                                | 11 ++-
+    src/SpaceMan/AbstractSyntaxTree.hs            |  6 +-
+    src/SpaceMan/Generate.hs                      | 21 ++---
+    src/SpaceMan/Interpreter.hs                   |  2 +-
+    src/SpaceMan/Language.hs                      |  2 +-
+    src/SpaceMan/Machine.hs                       |  6 +-
+    src/SpaceMan/Machine/FlowControl.hs           | 26 +++---
+    src/SpaceMan/Machine/InputOutput.hs           | 16 ++--
+    src/SpaceMan/Machine/Tools.hs                 |  2 +-
+    src/SpaceMan/Machine/Types.hs                 | 38 +++++----
+    src/SpaceMan/Parser.hs                        |  2 +-
+    src/SpaceMan/Program.hs                       | 16 ++--
+    src/SpaceMan/Transform.hs                     |  4 +-
+    test/property/PropertiesAlphabet.hs           | 31 +++++++
+    test/property/PropertiesHumanLabel.hs         | 18 +++++
+    test/property/SpaceManProperties.hs           | 45 +++++------
+    test/unit/SpaceManTests.hs                    | 45 ++---------
+    test/unit/TestsAlphabet.hs                    | 24 ++++++
+    test/unit/TestsHumanLabels.hs                 | 30 +++++++
+    test/unit/TestsLanguage.hs                    | 81 +++++++++++++++++++
+    25 files changed, 332 insertions(+), 124 deletions(-)
+
 * v1.0.2 → v1.0.3 (released 2020-09-20):
 
   Bugfixes:
