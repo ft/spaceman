@@ -10,7 +10,6 @@ module SpaceMan.Machine.Types (extractJumpTable,
 import SpaceMan.AbstractSyntaxTree
 
 import Control.Monad
-import Data.Maybe
 import qualified Data.Map.Strict as M
 
 type JumpTable = [(String, Address)]
@@ -31,10 +30,7 @@ heapStore :: Heap -> Address -> Value -> Heap
 heapStore h a k = M.insert a k h
 
 heapFetch :: Heap -> Address -> Value
-heapFetch h a = if v == Nothing
-                then 0
-                else fromJust v
-  where v = M.lookup a h
+heapFetch h a = M.findWithDefault 0 a h
 
 type StartInfo = (Integer, JumpTable, WhitespaceProgram)
 type MachineStart = Either String StartInfo
