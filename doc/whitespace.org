@@ -52,7 +52,7 @@ global namespace so all labels must be unique.
 * Stack Manipulation (IMP: ~[Space]~)
 
 Stack manipulation is one of the more common operations, hence the shortness of
-the IMP ~[Space]~. There are four stack instructions.
+the IMP ~[Space]~. There are six stack instructions.
 
 | Command        | Parameters | Meaning                                    |
 |----------------+------------+--------------------------------------------|
