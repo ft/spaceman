@@ -23,6 +23,34 @@ Execution works by applying instructions to a Stack Machine
 
 ## How does it work?
 
+\vspace{-0.6cm}
+`<Operation> [Parameter]`:
+
+- Most take no parameter, e.g. $\:$ `Swap Duplicate ÷ Modulo`
+- Some FlowControl ops take *Label* parameters, e.g. $\:$ `Tag Call Jump`
+- Some Stack ops take *Integer* parameters, e.g. $\:$ `Push Copy Slide`
+
+
+## How does it work?
+
+[simg:h=3.0cm|graphics/op-arith-div.pdf]
+
+
+## How does it work?
+
+\vspace{-1cm}
+Labels for FlowControl operations:
+
+- Spaces and Tabs of arbitrary length, terminated by a linefeed.
+- The spec assigns no special meaning to these strings.
+- There is just one name space, and labels have to be unique.
+- So you can't use the same label in two `Tag` calls.
+
+[simg:h=1.2cm:(3.2cm,1.3cm)|graphics/labels-simple.pdf]
+
+
+## How does it work?
+
 \vspace{-1cm}
 There is one type of data in Whitespace:
 
@@ -33,26 +61,13 @@ There is one type of data in Whitespace:
 
 [simg:h=2.5cm:(4cm,0.5cm)|graphics/numbers.pdf]
 
-## How does it work?
 
-Similarly, labels are strings like that as well:
+# …and that is all there is to it, really…
 
-- Spaces and Tabs of arbitrary length, terminated by a linefeed.
-- The spec assigns no special meaning to these strings.
-- There is just one name space, and labels have to be unique.
-- So you can't use the same label in two `Tag` calls.
 
-## How does it work?
+## How about implementing it?
 
-- Some code treats these labels like unsigned numbers though…
-- …where multiples of eight such bits are grouped into an eight bit integer…
-
-\vspace{1.3cm}
-
-- …then they map that to ASCII: The example here would be `0x55` → `U`
-- That is not at all required: `[SPC][LF]` is a perfectly fine label.
-
-[simg:h=1.7cm:(4cm,3.5cm)|graphics/labels.pdf]
+[simg:h=4.0cm|graphics/implementation.pdf]
 
 
 ## How about implementing it?
@@ -61,9 +76,9 @@ Similarly, labels are strings like that as well:
 data WhitespaceMachine = WhitespaceMachine
   {
     stack     :: Stack,
-    callStack :: Stack,
     heap      :: Heap,
     pc        :: Address,
+    callStack :: Stack,
     jump      :: JumpTable,         -- Maps a Label to an Address
     program   :: WhitespaceProgram  -- [WhitespaceExpression]
   } deriving (Show, Eq)

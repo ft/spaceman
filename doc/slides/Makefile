@@ -3,6 +3,9 @@ PUBLISH = ../whitespace-slides.pdf
 
 GRAPHICS_SVG  = graphics/numbers.svg
 GRAPHICS_SVG += graphics/labels.svg
+GRAPHICS_SVG += graphics/labels-simple.svg
+GRAPHICS_SVG += graphics/op-arith-div.svg
+GRAPHICS_SVG += graphics/implementation.svg
 GRAPHICS_PDF = ${GRAPHICS_SVG:.svg=.pdf}
 
 DEPENDENCIES = $(GRAPHICS_PDF)

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="45.203442mm"
+   height="13.270714mm"
+   viewBox="0 0 45.203442 13.270714"
+   version="1.1"
+   id="svg923"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="op-arith-div.svg"
+   inkscape:export-filename="/home/ft/bitmap.png"
+   inkscape:export-xdpi="600.01855"
+   inkscape:export-ydpi="600.01855">
+  <defs
+     id="defs917" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8.8"
+     inkscape:cx="68.28877"
+     inkscape:cy="26.03561"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     inkscape:snap-global="true"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-right="2"
+     fit-margin-bottom="2"
+     inkscape:window-width="2556"
+     inkscape:window-height="1436"
+     inkscape:window-x="2560"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1528"
+       originx="-40.828798"
+       originy="-124.72534" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata920">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-40.828799,-124.72534)">
+    <rect
+       ry="0"
+       rx="0"
+       y="130.96875"
+       x="47.625"
+       height="3.96875"
+       width="15.875"
+       id="rect835"
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path840"
+       d="m 51.59375,130.96875 v 3.96875"
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 55.5625,130.96875 v 3.96875"
+       id="path840-3"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 59.53125,130.96875 v 3.96875"
+       id="path840-6"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;line-height:1.25;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="48.415707"
+       y="133.48511"
+       id="text1532"><tspan
+         sodipodi:role="line"
+         id="tspan1530"
+         x="48.415707"
+         y="133.48511"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono';stroke-width:0.264583">Tab</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;line-height:1.25;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="52.344551"
+       y="133.48511"
+       id="text1532-3"><tspan
+         sodipodi:role="line"
+         id="tspan1530-6"
+         x="52.344551"
+         y="133.48511"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono';stroke-width:0.264583">Spc</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;line-height:1.25;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="56.301647"
+       y="133.48511"
+       id="text1532-7"><tspan
+         sodipodi:role="line"
+         id="tspan1530-5"
+         x="56.301647"
+         y="133.48511"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono';stroke-width:0.264583">Tab</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;line-height:1.25;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="60.230499"
+       y="133.48511"
+       id="text1532-3-3"><tspan
+         sodipodi:role="line"
+         id="tspan1530-6-5"
+         x="60.230499"
+         y="133.48511"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono';stroke-width:0.264583">Spc</tspan></text>
+    <g
+       id="g1630">
+      <ellipse
+         style="fill:#ffffff;fill-opacity:0.00189317;stroke:#e6051a;stroke-width:0.227288;stroke-opacity:1"
+         id="path1590"
+         cy="133.06479"
+         cx="51.195518"
+         rx="4.5483761"
+         ry="2.8176198" />
+      <path
+         style="fill:none;stroke:#e6051a;stroke-width:0.265;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 48.683333,130.70417 -2.38125,-1.5875"
+         id="path1607" />
+    </g>
+    <g
+       id="g1626">
+      <ellipse
+         style="fill:#ffffff;fill-opacity:0.00189317;stroke:#0005ba;stroke-width:0.227288;stroke-opacity:1"
+         id="path1590-6"
+         cy="133.06479"
+         cx="59.900661"
+         rx="4.5483766"
+         ry="2.8176198" />
+      <path
+         style="fill:none;stroke:#0005ba;stroke-width:0.265;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 64.262145,132.04167 2.38125,-1.5875"
+         id="path1607-2" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:0.9;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="66.243835"
+       y="130.1747"
+       id="text1634"><tspan
+         sodipodi:role="line"
+         id="tspan1632"
+         x="66.243835"
+         y="130.1747"
+         style="font-size:2.82222px;stroke-width:0.264583">Operation:</tspan><tspan
+         sodipodi:role="line"
+         x="66.243835"
+         y="132.71469"
+         style="font-size:2.82222px;stroke-width:0.264583"
+         id="tspan1636">Integer Division</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82223px;line-height:0.9;font-family:'EB Garamond';-inkscape-font-specification:'EB Garamond';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="42.772354"
+       y="128.64728"
+       id="text1634-9"><tspan
+         sodipodi:role="line"
+         x="42.772354"
+         y="128.64728"
+         style="font-size:2.82223px;stroke-width:0.264583"
+         id="tspan1636-2">IMP: Arithmetic</tspan></text>
+  </g>
+</svg>
