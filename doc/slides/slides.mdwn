@@ -186,7 +186,7 @@ stackParser = do
 ```
 
 
-## How about implementing it?
+## How about implementing it? — Eval
 
 ```.haskell
 module SpaceMan.Machine.Tools (
