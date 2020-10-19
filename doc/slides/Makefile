@@ -16,6 +16,8 @@ INKSCAPE = inkscape
 SVG2PDF = DISPLAY= $(INKSCAPE) --export-type=pdf --export-filename
 
 FILTERS = filters/simg.py
+FILTERS += filters/centered.py
+FILTERS += filters/columns.py
 MDWN2X = $(PANDOC) $(foreach f,$(FILTERS),-F $(f))
 MAINTEXDOCUMENT = $(patsubst %.pdf,%.tex,$(TARGET))
 

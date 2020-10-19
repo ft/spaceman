@@ -81,21 +81,40 @@ data WhitespaceMachine = WhitespaceMachine
     callStack :: Stack,
     jump      :: JumpTable,         -- Maps a Label to an Address
     program   :: WhitespaceProgram  -- [WhitespaceExpression]
-  } deriving (Show, Eq)
+  }
 ```
 
 
 ## How about implementing it? — AST
 
-```.haskell
-data WhitespaceExpression = StackManipulation StackOperation
-                          | Arithmetic ArithmeticOperation
-                          | HeapAccess HeapOperation
-                          | FlowControl FlowControlOperation
-                          | InputOutput InputOutputOperation
+[columns]
 
-data HeapOperation = Store | Fetch
+[column=0.60]
+
+\small
+```.haskell
+data WhitespaceExpression =
+    StackManipulation StackOperation
+  | Arithmetic        ArithmeticOperation
+  | HeapAccess        HeapOperation
+  | FlowControl       FlowControlOperation
+  | InputOutput       InputOutputOperation
 ```
+
+[column=0.4]
+
+\small
+```.haskell
+data StackOperation =
+    Push Integer
+  | Duplicate
+  | Copy Integer
+  | Swap
+  | Drop
+  | Slide Integer
+```
+
+[/columns]
 
 
 ## How about implementing it? — AST
@@ -113,6 +132,10 @@ data HeapOperation = Store | Fetch
 
 ## How about implementing it? — Parser
 
+[columns]
+
+[column=0.5]
+
 | IMP            | Meaning            |
 |----------------+--------------------|
 | `[Space]`      | Stack Manipulation |
@@ -121,10 +144,19 @@ data HeapOperation = Store | Fetch
 | `[Tab][Space]` | Arithmetic         |
 | `[Tab][LF]`    | I/O                |
 
-| Heap Command | Meaning |
-|--------------|---------|
-| `[Space]`    | Store   |
-| `[Tab]`      | Fetch   |
+[column=0.5]
+
+| Operation      | Meaning   |
+|----------------|-----------|
+| `[Space]`      | Push      |
+| `[LF][Space]`  | Duplicate |
+| `[LF][Tab]`    | Swap      |
+| `[LF][LF]`     | Discard   |
+| `[Tab][Space]` | Copy      |
+| `[Tab][LF]`    | Slide     |
+
+[/columns]
+
 
 ## How about implementing it? — Parser
 
@@ -136,12 +168,21 @@ whitespaceParser =
   <|> (HeapAccess         <$> heapParser)
   <|> (FlowControl        <$> flowControlParser)
   <|> (InputOutput        <$> ioParser)
+```
 
-heapParser :: Parser HeapOperation
-heapParser = do
-  (    try $ imp       [ WS.tabular, WS.tabular ])
-  (    try $ operation [ WS.space   ] Store)
-  <|> (try $ operation [ WS.tabular ] Fetch)
+
+## How about implementing it? — Parser
+
+```.haskell
+stackParser :: Parser StackOperation
+stackParser = do
+  (      try $ imp [ space ])
+  (      try $ Push  <$> number [ space ])
+    <|> (try $ operation        [ linefeed, space    ] Duplicate)
+    <|> (try $ operation        [ linefeed, tabular  ] Swap)
+    <|> (try $ operation        [ linefeed, linefeed ] Drop)
+    <|> (try $ Copy  <$> number [ tabular,  space    ])
+    <|> (try $ Slide <$> number [ tabular,  linefeed ])
 ```
 
 
@@ -160,11 +201,15 @@ where
 
 ## How about implementing it?
 
+\small
 ```.haskell
-eval :: WhitespaceMachine -> HeapOperation -> IO WhitespaceMachine
-eval m Store = return $ pci $ sto a v $ drp 2 m  where [v,a] = peek 2 m
-eval m Fetch = return $ pci $ psh [v] $ drp 1 m  where [a]   = peek 1 m
-                                                       v     = lda a m
+eval :: WhitespaceMachine -> StackOperation -> IO WhitespaceMachine
+eval m (Push n)  = return $ pci $ psh [n] m
+eval m Duplicate = return $ pci $ psh h m              where h     = peek 1 m
+eval m Swap      = return $ pci $ psh [b,a] $ drp 2 m  where [a,b] = peek 2 m
+eval m Drop      = return $ pci $ drp 1 m
+eval m (Copy i)  = return $ pci $ psh [n] m            where n = ref  i m
+eval m (Slide n) = return $ pci $ psh h $ drp (n+1) m  where h = peek 1 m
 ```
 
 
