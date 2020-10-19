@@ -70,7 +70,7 @@ There is one type of data in Whitespace:
 [simg:h=4.0cm|graphics/implementation.pdf]
 
 
-## How about implementing it?
+## How about implementing it? — VM
 
 ```.haskell
 data WhitespaceMachine = WhitespaceMachine
@@ -85,7 +85,7 @@ data WhitespaceMachine = WhitespaceMachine
 ```
 
 
-## How about implementing it?
+## How about implementing it? — AST
 
 ```.haskell
 data WhitespaceExpression = StackManipulation StackOperation
@@ -98,7 +98,7 @@ data HeapOperation = Store | Fetch
 ```
 
 
-## How about implementing it?
+## How about implementing it? — AST
 
 ```.haskell
   [ StackManipulation (Push 11),
@@ -111,7 +111,7 @@ data HeapOperation = Store | Fetch
 …what is left to do?
 
 
-## How about implementing it?
+## How about implementing it? — Parser
 
 | IMP            | Meaning            |
 |----------------+--------------------|
@@ -126,7 +126,7 @@ data HeapOperation = Store | Fetch
 | `[Space]`    | Store   |
 | `[Tab]`      | Fetch   |
 
-## How about implementing it?
+## How about implementing it? — Parser
 
 ```.haskell
 whitespaceParser :: Parser WhitespaceExpression
