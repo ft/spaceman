@@ -236,6 +236,7 @@ SpaceMan Implementation can be found here:
 
 - http://github.com/ft/spaceman
 - http://gitlab.com/ft/spaceman
+- http://bewatermyfriend.org/p/2020/000/
 
 
 # — Fin —
