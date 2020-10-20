@@ -284,6 +284,7 @@ Virtual Machine Design:
 
 ## How about implementing it?
 
+\small
 ```.haskell
 jmp :: WhitespaceMachine -> Label -> Predicate -> IO WhitespaceMachine
 jmp m tag p = return $ pcl n $ drp 1 m
