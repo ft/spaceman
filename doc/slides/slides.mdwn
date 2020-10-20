@@ -161,19 +161,6 @@ data StackOperation =
 ## How about implementing it? — Parser
 
 ```.haskell
-whitespaceParser :: Parser WhitespaceExpression
-whitespaceParser =
-  (    StackManipulation  <$> stackParser)
-  <|> (Arithmetic         <$> arithmeticParser)
-  <|> (HeapAccess         <$> heapParser)
-  <|> (FlowControl        <$> flowControlParser)
-  <|> (InputOutput        <$> ioParser)
-```
-
-
-## How about implementing it? — Parser
-
-```.haskell
 stackParser :: Parser StackOperation
 stackParser = do
   (      try $ imp [ space ])
@@ -302,6 +289,19 @@ Virtual Machine Design:
 - Program Counter — The index into program memory
 - Jump Table — For all the `Jump` and `Call` instructions
 - Call Stack — Because there are the `Call` and `Return` instruction
+
+
+## How about implementing it? — Parser
+
+```.haskell
+whitespaceParser :: Parser WhitespaceExpression
+whitespaceParser =
+  (    StackManipulation  <$> stackParser)
+  <|> (Arithmetic         <$> arithmeticParser)
+  <|> (HeapAccess         <$> heapParser)
+  <|> (FlowControl        <$> flowControlParser)
+  <|> (InputOutput        <$> ioParser)
+```
 
 
 ## How about implementing it?
