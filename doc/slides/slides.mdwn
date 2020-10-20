@@ -24,7 +24,7 @@ Execution works by applying instructions to a Stack Machine
 ## How does it work?
 
 \vspace{-0.6cm}
-`<Operation> [Parameter]`:
+`<IMP> <Operation> [Parameter]`:
 
 - Most take no parameter, e.g. $\:$ `Swap Duplicate ÷ Modulo`
 - Some FlowControl ops take *Label* parameters, e.g. $\:$ `Tag Call Jump`
